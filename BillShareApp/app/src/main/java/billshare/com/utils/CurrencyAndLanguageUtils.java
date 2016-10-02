@@ -5,9 +5,7 @@ import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by venu on 21/09/16.
- */
+
 public class CurrencyAndLanguageUtils {
     private static CurrencyAndLanguageUtils currencyAndLanguageUtils;
     private List<String> currencyList, languageList;
