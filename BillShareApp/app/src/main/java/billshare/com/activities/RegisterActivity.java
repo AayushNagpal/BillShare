@@ -1,12 +1,23 @@
 package billshare.com.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import billshare.com.model.User;
+import billshare.com.responses.ResponseStatus;
+import billshare.com.restservice.RestServiceObject;
 import billshare.com.utils.CurrencyAndLanguageUtils;
 import billshare.com.utils.TimeZoneUtils;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -16,7 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     Spinner currencies;
 
     Spinner languages;
-    ArrayAdapter<String> countriesAdapter, currencyAdapter,languageAdapter;
+    ArrayAdapter<String> countriesAdapter, currencyAdapter, languageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +36,46 @@ public class RegisterActivity extends AppCompatActivity {
         setTimeZones();
         setCurrencies();
         setLanguages();
+        findViewById(R.id.registerButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                register();
+            }
+        });
+
+    }
+
+    private void register() {
+        User user = new User();
+        EditText nameEditText = (EditText) findViewById(R.id.fullname);
+        user.setName(nameEditText.getText().toString());
+        EditText emailEditText = (EditText) findViewById(R.id.email);
+        user.setEmailId(emailEditText.getText().toString());
+        EditText passwordEditText = (EditText) findViewById(R.id.password);
+        user.setPassword(passwordEditText.getText().toString());
+        EditText phonenumberEditText = (EditText) findViewById(R.id.phone_number);
+        user.setMobileNo(phonenumberEditText.getText().toString());
+        Spinner timeZoneSpinner = (Spinner) findViewById(R.id.time_zone);
+        user.setMobileNo(timeZoneSpinner.getSelectedItem().toString());
+        Spinner currencySpinner = (Spinner) findViewById(R.id.currency);
+        user.setMobileNo(currencySpinner.getSelectedItem().toString());
+        Spinner languagesSpinner = (Spinner) findViewById(R.id.languages);
+        user.setMobileNo(languagesSpinner.getSelectedItem().toString());
+        Call<ResponseStatus> call = RestServiceObject.getiRestServicesObject(getApplicationContext()).register(user);
+        call.enqueue(new Callback<ResponseStatus>() {
+            @Override
+            public void onResponse(Response<ResponseStatus> response, Retrofit retrofit) {
+                if(response!=null){
+                    Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(getApplicationContext(),t.toString(),Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setTimeZones() {
@@ -40,6 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, CurrencyAndLanguageUtils.instance().getCurrencyList());
         currencies.setAdapter(currencyAdapter);
     }
+
     private void setLanguages() {
         languages = (Spinner) findViewById(R.id.languages);
         languageAdapter = new ArrayAdapter<String>(this,
