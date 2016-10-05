@@ -3,7 +3,18 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.1"
-
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
     defaultConfig {
         applicationId "billshare.com.billshareapp"
         minSdkVersion 15
@@ -29,6 +40,11 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
     compile 'com.squareup.retrofit:converter-jackson:2.0.0-beta2'
     compile 'com.jakewharton:butterknife:7.0.1'
-
+// https://mvnrepository.com/artifact/org.hamcrest/hamcrest-junit
+   // compile group: 'org.hamcrest', name: 'hamcrest-junit', version: '2.0.0.0'
     compile 'com.squareup.okhttp:okhttp:2.7.5'
+    //compile 'junit:junit:4.12'
+    compile('junit:junit:4.12') {
+        exclude group: 'org.hamcrest', module: 'hamcrest-core'
+    }
 }

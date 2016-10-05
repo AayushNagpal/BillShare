@@ -8,7 +8,7 @@ import javax.persistence.Id;
 @Entity
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private String mobileNo;
@@ -17,6 +17,16 @@ public class User {
 	private String timeZone;
 	private String langugeCode;
 	private String deviceId;
+	private String password;
+	
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	public Long getId() {
 		return id;
