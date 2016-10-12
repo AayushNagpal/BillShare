@@ -15,7 +15,7 @@ import retrofit.Retrofit;
 public class RestServiceObject {
     private static Context context1;
 
-    private static final String BASE_URL = "http://137.30.200.132:9090";
+    private static final String BASE_URL = "http://192.168.1.100:8080";
 
     public static IRestServices getiRestServicesObject(Context context) {
         context1 = context;

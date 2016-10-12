@@ -24,8 +24,8 @@ import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-//import static org.hamcrest.CoreMatchers.is;
-//import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.hasProperty;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -121,14 +121,14 @@ public class RegisterActivity extends AppCompatActivity {
     public void testNameNotFoundException() throws NameNotFoundException {
 
         //test type
-     //   thrown.expect(NameNotFoundException.class);
+        thrown.expect(NameNotFoundException.class);
 
         //test message
-       // thrown.expectMessage(is("Name is empty!"));
+        thrown.expectMessage(is("Name is empty!"));
 
         //test detail
-        //thrown.expect(hasProperty("errCode"));  //make sure getters n setters are defined.
-        //thrown.expect(hasProperty("errCode", is(666)));
+        thrown.expect(hasProperty("errCode"));  //make sure getters n setters are defined.
+        thrown.expect(hasProperty("errCode", is(666)));
 
 
     }

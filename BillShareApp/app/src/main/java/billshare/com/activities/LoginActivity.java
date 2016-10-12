@@ -29,9 +29,18 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import billshare.com.model.User;
+import billshare.com.responses.ResponseStatus;
+import billshare.com.restservice.RestServiceObject;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -193,8 +202,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            User user=new User();
+            user.setEmailId(email);
+            user.setPassword(password);
+            Call<ResponseStatus> call = RestServiceObject.getiRestServicesObject(getApplicationContext()).login(user);
+            call.enqueue(new Callback<ResponseStatus>() {
+                @Override
+                public void onResponse(Response<ResponseStatus> response, Retrofit retrofit) {
+                    if (response != null) {
+                        User user=response.body().getUser();
+                        showProgress(false);
+                        if(user!=null){
+                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                            startActivity(intent);
+
+                        }else{
+                            Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            //mAuthTask = new UserLoginTask(email, password);
+           // mAuthTask.execute((Void) null);
         }
     }
 

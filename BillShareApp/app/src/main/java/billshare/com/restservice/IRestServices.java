@@ -12,5 +12,7 @@ import retrofit.http.POST;
 public interface IRestServices {
     @POST("/user/register")
     Call<ResponseStatus> register(@Body User user);
+    @POST("/user/login")
+    Call<ResponseStatus> login(@Body User user);
 
 }
