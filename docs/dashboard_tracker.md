@@ -11,8 +11,9 @@ Different phases of project:
 * Goals: Aiming to develop a sample application which will be the best technology for our project.
 * Set up the project in Github.
 * Pair programming teams:
-| Chad Jayasree | Aayush, Anusha | Manoj, Eashwer |
-| -------------  --------------- | -------------- |
+
+| Chad Jayasree   | Aayush, Anusha   | Manoj, Eashwer               |
+| --------------- | ---------------- | ---------------------------- |
 | Database Schema | Android Basic UI | UML and Requirement Analysis |
 
 * Achievements: Our team came up with designing the Login Screen and creating a database schema
@@ -26,9 +27,10 @@ Different phases of project:
 * Scrum Masters: Anusha Kondam
 * Goals: Design registration screen, create dummy app, work on sever-side programming
 * Pair programming teams:
-| Chad, Aayush | Jayasree, Anusha | Manoj, Eashwer |
-| ------------ | ---------------- | -------------- |
-| Test cases, login and registration|  | Registration Screen |
+
+| Chad, Aayush                       | Jayasree, Anusha | Manoj, Eashwer      |
+| ---------------------------------- | ---------------- | ------------------- |
+| Test cases, login and registration |                  | Registration Screen |
 
 * Achievements:
 * Challenges:
@@ -37,8 +39,9 @@ Different phases of project:
 * Scrum Masters: Anusha Kondam
 * Goals:
 * Pair programming teams:
-| Chad, Aayush | Jayasree, Anusha | Manoj, Eashwer |
-| ------------ | ---------------- | -------------- |
+
+| Chad, Aayush                                     | Jayasree, Anusha                        | Manoj, Eashwer               |
+| ------------------------------------------------ | --------------------------------------- | ---------------------------- |
 | Login, registration functionality and unit tests | Server side programming, schema testing | Registration and home screen |
 
 * Achievements: Successfully completed Login, registration functionality and respective server side programming. Testing for the developed functionality.
