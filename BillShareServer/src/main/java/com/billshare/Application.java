@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableAutoConfiguration
 @ComponentScan
 @SpringBootApplication
-@EnableWebMvc
+@EnableWebMvc 
 public class Application {
 	@Bean
 	public DozerBeanMapper dozerBeanMapper() {

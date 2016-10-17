@@ -9,11 +9,13 @@ import java.util.concurrent.TimeUnit;
 import retrofit.JacksonConverterFactory;
 import retrofit.Retrofit;
 
-
+/**
+ * Created by venu on 03/10/16.
+ */
 public class RestServiceObject {
     private static Context context1;
 
-    private static final String BASE_URL = "http://localhost:8080";
+    private static final String BASE_URL = "http://192.168.1.100:8080";
 
     public static IRestServices getiRestServicesObject(Context context) {
         context1 = context;
@@ -24,8 +26,7 @@ public class RestServiceObject {
                 .addConverterFactory(JacksonConverterFactory.create(objectMapper))
                 .build();
         retrofit.client().setConnectTimeout(10, TimeUnit.SECONDS);
-        IRestServices iRestServices = retrofit.create(IRestServices.class);
-        return iRestServices;
+        return retrofit.create(IRestServices.class);
     }
 
 }

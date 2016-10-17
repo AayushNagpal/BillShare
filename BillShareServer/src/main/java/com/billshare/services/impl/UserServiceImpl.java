@@ -7,11 +7,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.billshare.constants.ResponseCode;
 import com.billshare.constants.Status;
+import com.billshare.constants.UserMessages;
 import com.billshare.dao.UserDao;
 import com.billshare.domain.User;
 import com.billshare.dto.UserDTO;
 import com.billshare.services.UserService;
 import com.billshare.utils.ResponseStatus;
+
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -31,6 +33,22 @@ public class UserServiceImpl implements UserService {
 			return responseStatus;
 		}
 		responseStatus.setCode(ResponseCode.FAILURE);
+		return responseStatus;
+	}
+
+	@Override
+	public ResponseStatus login(User user) {
+		ResponseStatus responseStatus = new ResponseStatus();
+		User login = userDao.login(user);
+		if (login != null) {
+			responseStatus.setUser(login);
+			responseStatus.setCode(ResponseCode.SUCCESS);
+			responseStatus.setStatus(Status.SUCCESS);
+
+		} else {
+			responseStatus.setCode(ResponseCode.AUTH_INVALID);
+			responseStatus.setMessage(UserMessages.INVALID_CREDENTILAS);
+		}
 		return responseStatus;
 	}
 

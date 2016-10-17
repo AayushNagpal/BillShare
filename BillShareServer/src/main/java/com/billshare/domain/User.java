@@ -1,5 +1,6 @@
 package com.billshare.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,15 +9,30 @@ import javax.persistence.Id;
 @Entity
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	@Column(name="mobile_no")
 	private String mobileNo;
+	@Column(name="email_id")
 	private String emailId;
 	private String currency;
+	@Column(name="time_zone")
 	private String timeZone;
+	@Column(name="language_code")
 	private String langugeCode;
+	@Column(name="device_id")
 	private String deviceId;
+	private String password;
+	
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	public Long getId() {
 		return id;

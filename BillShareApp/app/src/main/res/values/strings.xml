@@ -20,4 +20,6 @@
     <string name="currency">Select Currency</string>
     <string name="countries">Select Country</string>
     <string name="language">Select Language</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="logout">Logout</string>
 </resources>

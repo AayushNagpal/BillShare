@@ -1,21 +1,26 @@
 package com.billshare.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.billshare.domain.User;
 import com.billshare.dto.UserDTO;
 import com.billshare.services.UserService;
 import com.billshare.utils.ResponseStatus;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 	@Autowired
 	UserService userService;
-	@RequestMapping(value="/register", method=RequestMethod.POST)
-	public ResponseStatus register(UserDTO userDTO) {
+	@RequestMapping("/register")
+	public ResponseStatus register(@RequestBody UserDTO userDTO) {
 		return userService.register(userDTO);
 	}
-
+	@RequestMapping("/login")
+	public ResponseStatus login(@RequestBody User user) {
+		return userService.login(user);
+	}
 }
