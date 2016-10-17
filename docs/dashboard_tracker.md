@@ -1,4 +1,10 @@
 # Bill Sharing App
+Notes: 
+1. The DOCX version of this file is deprecated. Please use this version instead.
+2. See the [Markdown document] (https://gitlab.com/help/user/markdown.md) for instructions on how to update this document.
+
+
+
 
 
 ## Abstract: 
