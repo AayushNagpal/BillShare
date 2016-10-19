@@ -1,1 +1,1 @@
-# This is a readme
+# Team project for the CSCI 6363 (Agile Software Engineering) course in Fall 2016.
