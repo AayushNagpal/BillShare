@@ -3,6 +3,7 @@ package billshare.com.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -19,6 +20,7 @@ import billshare.com.restservice.RestServiceObject;
 import billshare.com.testcases.NameNotFoundException;
 import billshare.com.utils.CurrencyAndLanguageUtils;
 import billshare.com.utils.TimeZoneUtils;
+import billshare.com.utils.ValidationUtil;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -61,39 +63,94 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void register() throws NameNotFoundException {
         User user = new User();
-        EditText nameEditText = (EditText) findViewById(R.id.fullname);
-        String name = nameEditText.getText().toString();
-        if ("".equals(name)) {
-            throw new NameNotFoundException(666, "Name is empty!");
-        }
-        user.setName(name);
-        EditText emailEditText = (EditText) findViewById(R.id.email);
-        user.setEmailId(emailEditText.getText().toString());
-        EditText passwordEditText = (EditText) findViewById(R.id.password);
-        user.setPassword(passwordEditText.getText().toString());
-        EditText phonenumberEditText = (EditText) findViewById(R.id.phone_number);
-        user.setMobileNo(phonenumberEditText.getText().toString());
-        Spinner timeZoneSpinner = (Spinner) findViewById(R.id.time_zone);
-        user.setTimeZone(timeZoneSpinner.getSelectedItem().toString());
-        Spinner currencySpinner = (Spinner) findViewById(R.id.currency);
-        user.setCurrency(currencySpinner.getSelectedItem().toString());
-        Spinner languagesSpinner = (Spinner) findViewById(R.id.languages);
-        user.setLangugeCode(languagesSpinner.getSelectedItem().toString());
-        Call<ResponseStatus> call = RestServiceObject.getiRestServicesObject(getApplicationContext()).register(user);
-        call.enqueue(new Callback<ResponseStatus>() {
-            @Override
-            public void onResponse(Response<ResponseStatus> response, Retrofit retrofit) {
-                if (response != null) {
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
-                }
-            }
 
-            @Override
-            public void onFailure(Throwable t) {
-                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        boolean cancel = false;
+        View focusView = null;
+        EditText nameEditText = (EditText) findViewById(R.id.fullname);
+        EditText emailEditText = (EditText) findViewById(R.id.email);
+        EditText passwordEditText = (EditText) findViewById(R.id.password);
+        EditText phonenumberEditText = (EditText) findViewById(R.id.phone_number);
+        nameEditText.setError(null);
+        emailEditText.setError(null);
+        passwordEditText.setError(null);
+        phonenumberEditText.setError(null);
+
+        String name = nameEditText.getText().toString();
+      /*  if ("".equals(name)) {
+            throw new NameNotFoundException(666, "Name is empty!");
+        }*/
+        if ( TextUtils.isEmpty(name)) {
+            nameEditText.setError(getString(R.string.error_field_required));
+            focusView = nameEditText;
+            cancel = true;
+        }
+
+        user.setName(name);
+
+
+
+
+        String phoneNumber=phonenumberEditText.getText().toString();
+        if (!cancel &&TextUtils.isEmpty(phoneNumber)) {
+            phonenumberEditText.setError(getString(R.string.error_field_required));
+            focusView = phonenumberEditText;
+            cancel = true;
+        }
+
+        user.setMobileNo(phoneNumber);
+        String email = emailEditText.getText().toString();
+        if (!cancel &&TextUtils.isEmpty(email)) {
+            emailEditText.setError(getString(R.string.error_field_required));
+            focusView = emailEditText;
+            cancel = true;
+        } else if (!cancel &&!ValidationUtil.instance().isEmailValid(email)) {
+            emailEditText.setError(getString(R.string.error_invalid_email));
+            focusView = emailEditText;
+            cancel = true;
+        }
+        user.setEmailId(emailEditText.getText().toString());
+        String password = passwordEditText.getText().toString();
+        if (!cancel &&TextUtils.isEmpty(password)) {
+            passwordEditText.setError(getString(R.string.error_field_required));
+            focusView = passwordEditText;
+            cancel = true;
+        }
+        if (!cancel &&!TextUtils.isEmpty(password) && !ValidationUtil.instance().isPasswordValid(password)) {
+            passwordEditText.setError(getString(R.string.error_invalid_password));
+            focusView = passwordEditText;
+            cancel = true;
+        }
+        user.setPassword(password);
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        } else {
+
+
+            Spinner timeZoneSpinner = (Spinner) findViewById(R.id.time_zone);
+            user.setTimeZone(timeZoneSpinner.getSelectedItem().toString());
+            Spinner currencySpinner = (Spinner) findViewById(R.id.currency);
+            user.setCurrency(currencySpinner.getSelectedItem().toString());
+            Spinner languagesSpinner = (Spinner) findViewById(R.id.languages);
+            user.setLangugeCode(languagesSpinner.getSelectedItem().toString());
+
+            Call<ResponseStatus> call = RestServiceObject.getiRestServicesObject(getApplicationContext()).register(user);
+            call.enqueue(new Callback<ResponseStatus>() {
+                @Override
+                public void onResponse(Response<ResponseStatus> response, Retrofit retrofit) {
+                    if (response != null) {
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void setTimeZones() {
