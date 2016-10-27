@@ -53,10 +53,8 @@ dependencies {
     // https://mvnrepository.com/artifact/org.hamcrest/hamcrest-junit
     compile group: 'org.hamcrest', name: 'hamcrest-junit', version: '2.0.0.0'
     compile 'com.squareup.okhttp:okhttp:2.7.5'
-    compile 'junit:junit:4.12'
+    //compile 'junit:junit:4.12'
     compile 'com.android.support:cardview-v7:24.2.1'
-}
-
 
     // Android runner and rules support
     androidTestCompile 'com.android.support.test:runner:0.5'
@@ -72,5 +70,9 @@ dependencies {
 
     // add this for webview testing support
     androidTestCompile 'com.android.support.test.espresso:espresso-web:2.2.2'
-    androidTestCompile 'com.android.support:support-annotations:24.1.1'
+    androidTestCompile 'com.android.support:support-annotations:24.2.1'
     compile 'com.android.support:support-annotations:24.1.1'
+}
+
+
+
