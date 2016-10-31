@@ -37,7 +37,6 @@ import java.util.List;
 import billshare.com.model.User;
 import billshare.com.responses.ResponseStatus;
 import billshare.com.restservice.RestServiceObject;
-import billshare.com.utils.PreferenceUtil;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -77,51 +76,39 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        // Set up the login form.
+        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        populateAutoComplete();
 
-        if (!PreferenceUtil.instance(getApplicationContext()).isNotExistSPreferences()) {
-            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(intent);
-            finish();
-
-        } else {
-
-
-            // Set up the login form.
-            mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-            populateAutoComplete();
-
-            mPasswordView = (EditText) findViewById(R.id.password);
-            mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                    if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                        attemptLogin();
-                        //finish();
-                        return true;
-                    }
-                    return false;
-                }
-            });
-
-            Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-            mEmailSignInButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                if (id == R.id.login || id == EditorInfo.IME_NULL) {
                     attemptLogin();
+                    return true;
                 }
-            });
+                return false;
+            }
+        });
 
-            findViewById(R.id.register).setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
-                }
-            });
+        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptLogin();
+            }
+        });
 
-            mLoginFormView = findViewById(R.id.login_form);
-            mProgressView = findViewById(R.id.login_progress);
-        }
+        findViewById(R.id.register).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+            }
+        });
 
+        mLoginFormView = findViewById(R.id.login_form);
+        mProgressView = findViewById(R.id.login_progress);
     }
 
     private void populateAutoComplete() {
@@ -189,7 +176,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         boolean cancel = false;
         View focusView = null;
 
-        // Check for a valid password, if the user entered one.
+     // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
@@ -215,7 +202,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            User user = new User();
+            User user=new User();
             user.setEmailId(email);
             user.setPassword(password);
             Call<ResponseStatus> call = RestServiceObject.getiRestServicesObject(getApplicationContext()).login(user);
@@ -223,17 +210,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 @Override
                 public void onResponse(Response<ResponseStatus> response, Retrofit retrofit) {
                     if (response != null) {
-
-                        User user = response.body().getUser();
-                        PreferenceUtil.instance(getApplicationContext()).setSPreferences(user);
+                        User user=response.body().getUser();
                         showProgress(false);
-                        if (user != null) {
-
+                        if(user!=null){
                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                             startActivity(intent);
                             finish();
 
-                        } else {
+                        }else{
                             Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         }
 
@@ -246,7 +230,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             });
             //mAuthTask = new UserLoginTask(email, password);
-            // mAuthTask.execute((Void) null);
+           // mAuthTask.execute((Void) null);
         }
     }
 
