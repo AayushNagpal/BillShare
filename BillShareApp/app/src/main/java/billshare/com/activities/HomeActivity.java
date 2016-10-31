@@ -24,6 +24,7 @@ import java.util.List;
 
 import billshare.com.fragments.GroupFragment;
 import billshare.com.fragments.ProfileFragment;
+import billshare.com.utils.PreferenceUtil;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -83,6 +84,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.logout){
+            PreferenceUtil.instance(getApplicationContext()).clearSPreferences();
             Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
             startActivity(intent);
             finish();

@@ -2,14 +2,18 @@ package billshare.com.fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import billshare.com.activities.AddGroupActivity;
 import billshare.com.activities.R;
 
 
@@ -67,8 +71,21 @@ public class GroupFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_group, container, false);
+        View empty = view.findViewById(R.id.empty);
+        ListView list = (ListView) view.findViewById(R.id.list);
+        list.setEmptyView(empty);
+
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), AddGroupActivity.class);
+                startActivity(intent);
+            }
+        });
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_group, container, false);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

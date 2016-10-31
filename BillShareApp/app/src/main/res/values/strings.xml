@@ -20,9 +20,14 @@
     <string name="currency">Select Currency</string>
     <string name="countries">Select Country</string>
     <string name="language">Select Language</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_home">Home</string>
     <string name="logout">Logout</string>
-
+    <string name="group_name">Group Name</string>
+    <string name="enter_email_id">Email Id</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_group">Add Group</string>
+    <string name="no_groups_found">No Groups</string>
+    <string name="owe">YOU OWE</string>
+    <string name="get">YOU GET</string>
 </resources>

@@ -44,20 +44,6 @@ public class User {
 
     private String password;
 
-    public User(Integer id, String name, String mobileNo, String emailId, String currency, String timeZone, String langugeCode, String deviceId, String password){         
-        this.id = id;         
-        this.name = name;        
-        this.mobileNo = mobileNo;         
-        this.emailId = emailId;         
-        this.currency = currency;         
-        this.timeZone = timeZone;         
-        this.langugeCode = langugeCode;         
-        this.deviceId = deviceId;         
-        this.password = password;     
-    }     
-    
-    public User(){     }
-
     public String getPassword() {
         return password;
     }
