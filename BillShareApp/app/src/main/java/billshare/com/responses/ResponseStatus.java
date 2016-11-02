@@ -2,6 +2,7 @@
 package billshare.com.responses;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -37,8 +38,18 @@ public class ResponseStatus {
     private String message;
     @JsonProperty("user")
     private User user;
+    @JsonProperty("users")
+    private List<User> users;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    @JsonProperty("users")
+    public List<User> getUsers() {
+        return users;
+    }
+    @JsonProperty("users")
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 
     /**
      * 

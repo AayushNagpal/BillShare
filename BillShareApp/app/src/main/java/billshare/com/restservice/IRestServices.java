@@ -5,6 +5,7 @@ import billshare.com.responses.ResponseStatus;
 import retrofit.Call;
 import retrofit.http.Body;
 import retrofit.http.POST;
+import retrofit.http.Query;
 
 
 public interface IRestServices {
@@ -12,5 +13,7 @@ public interface IRestServices {
     Call<ResponseStatus> register(@Body User user);
     @POST("/user/login")
     Call<ResponseStatus> login(@Body User user);
+    @POST("/user/list")
+    Call<ResponseStatus> users(@Query("id") String id);
 
 }

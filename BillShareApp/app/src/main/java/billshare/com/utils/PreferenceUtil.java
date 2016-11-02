@@ -55,6 +55,11 @@ public class PreferenceUtil {
 
     }
 
+    public String getIdFromSPreferences() {
+        SharedPreferences preferenceObject = getPreferenceObject();
+        return String.valueOf(preferenceObject.getInt(StringConstants.USER_ID, 0));
+    }
+
     public boolean isNotExistSPreferences() {
 
         return getPreferenceObject().getAll().isEmpty();
