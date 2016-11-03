@@ -1,7 +1,5 @@
 package com.billshare.dao;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -14,36 +12,38 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.billshare.domain.User;
-
 @Repository
 @Transactional
 public class UserDao {
-	@PersistenceContext
-	private EntityManager entityManager;
+	 @PersistenceContext
+	  private EntityManager entityManager;
 
 	public boolean register(User user) {
-		entityManager.persist(user);
-		return true;
-	}
-
-	public User login(User user) {
+		    entityManager.persist(user);
+		    return true;
+		  }
+	
+	public User login(User user){
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+		CriteriaQuery<User> criteriaQuery = criteriaBuilder
+				.createQuery(User.class);
 		Root<User> root = criteriaQuery.from(User.class);
 		criteriaQuery.select(root);
 		try {
-			Predicate equalPassword = criteriaBuilder.equal(root.get("password"), user.getPassword());
-			Predicate equalUserName = criteriaBuilder.equal(root.get("emailId"), user.getEmailId());
-
+			Predicate equalPassword = criteriaBuilder.equal(
+					root.get("password"), user.getPassword());
+			Predicate equalUserName = criteriaBuilder.equal(
+					root.get("emailId"), user.getEmailId());
+		
 			criteriaQuery.where(equalUserName, equalPassword);
 			User result = null;
 			try {
-				result = (User) entityManager.createQuery(criteriaQuery).getSingleResult();
+				result = (User)entityManager.createQuery(criteriaQuery).getSingleResult();
 
 				return result;
 			} catch (NoResultException e) {
 				return null;
-				// e.printStackTrace();
+				//e.printStackTrace();
 
 			}
 		} catch (Exception exception) {
@@ -51,19 +51,5 @@ public class UserDao {
 		}
 		return null;
 	}
-
-	public List<User> getUserList(String id) {
-		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
-		Root<User> root = criteriaQuery.from(User.class);
-		criteriaQuery.select(root);
-		List<User> users = entityManager.createQuery(criteriaQuery).getResultList();
-		for (User user : users) {
-			if (user.getId().equals(Long.parseLong(id))) {
-				users.remove(user);
-				break;
-			}
-		}
-		return users;
 	}
-}
+

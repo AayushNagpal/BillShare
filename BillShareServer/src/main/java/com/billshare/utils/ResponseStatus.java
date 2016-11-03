@@ -1,5 +1,7 @@
 package com.billshare.utils;
 
+import java.util.List;
+
 import com.billshare.domain.User;
 
 public class ResponseStatus {
@@ -9,7 +11,14 @@ public class ResponseStatus {
 	private String uid;
 	private String message;
 	private User user;
+	private List<User> users;
 	
+	public List<User> getUsers() {
+		return users;
+	}
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
 	public User getUser() {
 		return user;
 	}

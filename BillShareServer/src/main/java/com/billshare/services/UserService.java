@@ -7,4 +7,5 @@ import com.billshare.utils.ResponseStatus;
 public interface UserService {
 public ResponseStatus register(UserDTO userDTO);
 public ResponseStatus login(User user);
+public ResponseStatus list(String id);
 }

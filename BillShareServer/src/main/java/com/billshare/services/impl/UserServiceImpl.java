@@ -1,5 +1,7 @@
 package com.billshare.services.impl;
 
+import java.util.List;
+
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +44,22 @@ public class UserServiceImpl implements UserService {
 		User login = userDao.login(user);
 		if (login != null) {
 			responseStatus.setUser(login);
+			responseStatus.setCode(ResponseCode.SUCCESS);
+			responseStatus.setStatus(Status.SUCCESS);
+
+		} else {
+			responseStatus.setCode(ResponseCode.AUTH_INVALID);
+			responseStatus.setMessage(UserMessages.INVALID_CREDENTILAS);
+		}
+		return responseStatus;
+	}
+
+	@Override
+	public ResponseStatus list(String id) {
+		ResponseStatus responseStatus = new ResponseStatus();
+		List<User> users = userDao.getUserList(id);
+		if (users != null) {
+			responseStatus.setUsers(users);
 			responseStatus.setCode(ResponseCode.SUCCESS);
 			responseStatus.setStatus(Status.SUCCESS);
 
