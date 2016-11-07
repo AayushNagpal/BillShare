@@ -3,6 +3,7 @@ package billshare.com.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -18,6 +19,7 @@ import billshare.com.model.User;
 import billshare.com.responses.ResponseStatus;
 import billshare.com.restservice.RestServiceObject;
 import billshare.com.testcases.NameNotFoundException;
+import billshare.com.utils.Constants;
 import billshare.com.utils.CurrencyAndLanguageUtils;
 import billshare.com.utils.TimeZoneUtils;
 import billshare.com.utils.ValidationUtil;
@@ -29,7 +31,7 @@ import retrofit.Retrofit;
 import static org.hamcrest.CoreMatchers.is;
 //import static org.hamcrest.Matchers.hasProperty;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements Constants {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -54,6 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
                     register();
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Log.e(TAG, "Error in RegisterActivity.findViewByID");
                 }
 
             }
@@ -83,6 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
             nameEditText.setError(getString(R.string.error_field_required));
             focusView = nameEditText;
             cancel = true;
+            Log.w(TAG, "Name field is empty.");
         }
 
         user.setName(name);
@@ -95,6 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
             phonenumberEditText.setError(getString(R.string.error_field_required));
             focusView = phonenumberEditText;
             cancel = true;
+            Log.w(TAG, "Phone number field is empty.");
         }
 
         user.setMobileNo(phoneNumber);
@@ -103,10 +108,12 @@ public class RegisterActivity extends AppCompatActivity {
             emailEditText.setError(getString(R.string.error_field_required));
             focusView = emailEditText;
             cancel = true;
+            Log.w(TAG, "Email field is empty.");
         } else if (!cancel &&!ValidationUtil.instance().isEmailValid(email)) {
             emailEditText.setError(getString(R.string.error_invalid_email));
             focusView = emailEditText;
             cancel = true;
+            Log.w(TAG, "Invalid email entered.");
         }
         user.setEmailId(emailEditText.getText().toString());
         String password = passwordEditText.getText().toString();
@@ -114,11 +121,13 @@ public class RegisterActivity extends AppCompatActivity {
             passwordEditText.setError(getString(R.string.error_field_required));
             focusView = passwordEditText;
             cancel = true;
+            Log.w(TAG, "password field is empty.");
         }
         if (!cancel &&!TextUtils.isEmpty(password) && !ValidationUtil.instance().isPasswordValid(password)) {
             passwordEditText.setError(getString(R.string.error_invalid_password));
             focusView = passwordEditText;
             cancel = true;
+            Log.w(TAG, "Invalid password");
         }
         user.setPassword(password);
         if (cancel) {
@@ -142,6 +151,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if (response != null) {
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
+                        Log.i(TAG, "starting login.");
                     }
                 }
 
@@ -158,6 +168,7 @@ public class RegisterActivity extends AppCompatActivity {
         countriesAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, TimeZoneUtils.instance().getTimeZoneList());
         countries.setAdapter(countriesAdapter);
+        Log.i(TAG, "setting time zone");
     }
 
     private void setCurrencies() {
@@ -165,6 +176,7 @@ public class RegisterActivity extends AppCompatActivity {
         currencyAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, CurrencyAndLanguageUtils.instance().getCurrencyList());
         currencies.setAdapter(currencyAdapter);
+        Log.i(TAG, "setting currency");
     }
 
     private void setLanguages() {
@@ -172,6 +184,7 @@ public class RegisterActivity extends AppCompatActivity {
         languageAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, CurrencyAndLanguageUtils.instance().getLanguageList());
         languages.setAdapter(languageAdapter);
+        Log.i(TAG, "setting language");
     }
 
     @Test
@@ -182,6 +195,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         //test message
         thrown.expectMessage(is("Name is empty!"));
+        Log.e(TAG, "Testing: name is empty");
 
         //test detail
        // thrown.expect(hasProperty("errCode"));  //make sure getters n setters are defined.

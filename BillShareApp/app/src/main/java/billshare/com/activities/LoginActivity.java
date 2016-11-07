@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,6 +38,7 @@ import java.util.List;
 import billshare.com.model.User;
 import billshare.com.responses.ResponseStatus;
 import billshare.com.restservice.RestServiceObject;
+import billshare.com.utils.Constants;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -47,7 +49,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, Constants {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -181,6 +183,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
+            Log.w(TAG, "Error: Invalid password)");
         }
 
         // Check for a valid email address.
@@ -188,10 +191,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
+            Log.w(TAG, "Error: Empty emaial)");
         } else if (!isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
+            Log.w(TAG, "Error: Invalid Email)");
         }
 
         if (cancel) {
@@ -216,7 +221,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                             startActivity(intent);
                             finish();
-
+                            Log.i(TAG, "Login successful for user" + user.getEmailId());
                         }else{
                             Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -227,6 +232,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 @Override
                 public void onFailure(Throwable t) {
                     Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, t.toString());
                 }
             });
             //mAuthTask = new UserLoginTask(email, password);
@@ -356,6 +362,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 // Simulate network access.
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
+                Log.e(TAG, e.toString());
                 return false;
             }
 
@@ -368,6 +375,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
 
             // TODO: register the new account here.
+            //Log.i(TAG, "Your message here");
             return true;
         }
 
@@ -378,9 +386,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 finish();
+                Log.i(TAG, "Success");
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
+                Log.w(TAG, "Incorrect password");
             }
         }
 
@@ -388,6 +398,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected void onCancelled() {
             mAuthTask = null;
             showProgress(false);
+            Log.w(TAG, "Cancelled");
         }
     }
 }

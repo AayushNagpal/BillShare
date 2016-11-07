@@ -4,6 +4,7 @@ package billshare.com.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +20,9 @@ import java.util.List;
 
 import billshare.com.activities.R;
 import billshare.com.model.User;
+import billshare.com.utils.Constants;
 
-public class UserAdapter extends ArrayAdapter<User> {
+public class UserAdapter extends ArrayAdapter<User> implements Constants{
     private final Context mContext;
     private final List<User> users;
     private final List<User> usersAll;
@@ -74,6 +76,9 @@ public class UserAdapter extends ArrayAdapter<User> {
 
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e(TAG, "Error in UserAdapter.Java method getView()");
+            //TODO: Please implement more logs like this in this file.
+            //See: https://code.tutsplus.com/tutorials/android-essentials-application-logging--mobile-4578 Step 2 for description of log levels.
         }
         return convertView;
     }
@@ -125,6 +130,7 @@ public class UserAdapter extends ArrayAdapter<User> {
 
                     users.addAll(usersAll);
                     notifyDataSetInvalidated();
+                    Log.w(TAG, "UserAdapter.java methodPublishResults() notifyDataSetInvalidated()"); //What does this mean?
                 }
 
 
