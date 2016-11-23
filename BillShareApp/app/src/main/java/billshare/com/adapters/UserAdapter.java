@@ -4,7 +4,6 @@ package billshare.com.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +19,8 @@ import java.util.List;
 
 import billshare.com.activities.R;
 import billshare.com.model.User;
-import billshare.com.utils.Constants;
 
-public class UserAdapter extends ArrayAdapter<User> implements Constants{
+public class UserAdapter extends ArrayAdapter<User> {
     private final Context mContext;
     private final List<User> users;
     private final List<User> usersAll;
@@ -64,21 +62,19 @@ public class UserAdapter extends ArrayAdapter<User> implements Constants{
 
                 name.setText(user.getName());
                 email.setText(user.getEmailId());
-                convertView.findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
+               /* convertView.findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(mContext, user.getName(), Toast.LENGTH_SHORT).show();
+
                     }
-                });
+                });*/
 
                 return convertView;
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(TAG, "Error in UserAdapter.Java method getView()");
-            //TODO: Please implement more logs like this in this file.
-            //See: https://code.tutsplus.com/tutorials/android-essentials-application-logging--mobile-4578 Step 2 for description of log levels.
         }
         return convertView;
     }
@@ -130,7 +126,6 @@ public class UserAdapter extends ArrayAdapter<User> implements Constants{
 
                     users.addAll(usersAll);
                     notifyDataSetInvalidated();
-                    Log.w(TAG, "UserAdapter.java methodPublishResults() notifyDataSetInvalidated()"); //What does this mean?
                 }
 
 

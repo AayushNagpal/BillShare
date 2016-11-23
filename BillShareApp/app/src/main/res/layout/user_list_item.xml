@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
 
-
+android:textColor="@color/colorPrimary"
             android:gravity="center_vertical" />
 
         <TextView
@@ -34,9 +34,9 @@
             android:gravity="center_vertical" />
     </LinearLayout>
 
-    <ImageButton
+   <!-- <ImageButton
         android:id="@+id/add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_menu_add" />
+        app:srcCompat="@android:drawable/ic_menu_add" />-->
 </LinearLayout>
