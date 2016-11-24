@@ -9,8 +9,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import billshare.com.activities.R;
+import billshare.com.utils.PreferenceUtil;
 
 
 /**
@@ -30,7 +32,7 @@ public class ProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private TextView nameTextView, emailTextView, mobileTextView, timezoneTextView, currencyView;
     private OnFragmentInteractionListener mListener;
 
     public ProfileFragment() {
@@ -67,8 +69,21 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View v = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        nameTextView = (TextView) v.findViewById(R.id.userNameView);
+        emailTextView = (TextView) v.findViewById(R.id.emailView);
+        mobileTextView = (TextView) v.findViewById(R.id.mobileNumberView);
+        timezoneTextView = (TextView) v.findViewById(R.id.timeZoneView);
+        currencyView = (TextView) v.findViewById(R.id.currencyView);
+        nameTextView.setText(PreferenceUtil.instance(getActivity()).getNameFromSPreferences());
+        emailTextView.setText(PreferenceUtil.instance(getActivity()).getEmailIdFromSPreferences());
+        mobileTextView.setText(PreferenceUtil.instance(getActivity()).getMobileNoFromSPreferences());
+        timezoneTextView.setText(PreferenceUtil.instance(getActivity()).getTimeZoneFromSPreferences());
+        currencyView.setText(PreferenceUtil.instance(getActivity()).getCurrencyFromSPreferences());
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
