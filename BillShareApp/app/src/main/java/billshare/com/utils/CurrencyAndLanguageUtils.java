@@ -1,11 +1,13 @@
 package billshare.com.utils;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
-public class CurrencyAndLanguageUtils {
+public class CurrencyAndLanguageUtils implements Constants{
     private static CurrencyAndLanguageUtils currencyAndLanguageUtils;
     private List<String> currencyList, languageList;
 
@@ -47,6 +49,7 @@ public class CurrencyAndLanguageUtils {
                 currencyList.add(Currency.getInstance(loc).getCurrencyCode());
             } catch (Exception exc) {
                 // Locale not found
+                Log.e(TAG, "Locale not found");
             }
         }
 

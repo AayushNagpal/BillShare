@@ -62,12 +62,13 @@ public class UserAdapter extends ArrayAdapter<User> {
 
                 name.setText(user.getName());
                 email.setText(user.getEmailId());
-                convertView.findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
+               /* convertView.findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(mContext, user.getName(), Toast.LENGTH_SHORT).show();
+
                     }
-                });
+                });*/
 
                 return convertView;
             }
