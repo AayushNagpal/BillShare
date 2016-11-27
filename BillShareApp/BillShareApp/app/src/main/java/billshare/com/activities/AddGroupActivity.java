@@ -168,7 +168,7 @@ public class AddGroupActivity extends AppCompatActivity {
                 for (User user : selectedList) {
                     Friend friend = new Friend();
                     friend.setUserId(user.getId());
-                    friend.setStatus(Status.PENDING);
+                    //friend.setStatus(Status.PENDING);
                     friends.add(friend);
                 }
                 Group group = new Group();
@@ -181,6 +181,9 @@ public class AddGroupActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Response<Group> response, Retrofit retrofit) {
                         Group body = response.body();
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        startActivity(intent);
+                        finish();
                         ResponseStatus responseStatus = body.getResponseStatus();
                         if(responseStatus!=null){
                             if(responseStatus.getCode()==200){
