@@ -6,16 +6,20 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.List;
 
 import billshare.com.activities.AddGroupActivity;
+import billshare.com.activities.GroupActivity;
 import billshare.com.activities.R;
 import billshare.com.adapters.GroupAdapter;
 import billshare.com.responses.ResponseStatus;
@@ -23,6 +27,7 @@ import billshare.com.restservice.RestServiceObject;
 import billshare.com.utils.GroupInfo;
 import billshare.com.utils.GroupsList;
 import billshare.com.utils.PreferenceUtil;
+import billshare.com.utils.StringConstants;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -89,6 +94,20 @@ public class GroupFragment extends Fragment {
         list.setEmptyView(empty);
 
         showFriendList();
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final Object itemAtPosition = (GroupInfo) parent.getItemAtPosition(position);
+                Intent intent = new Intent(getActivity(), GroupActivity.class);
+                if (itemAtPosition instanceof GroupInfo) {
+
+                    GroupInfo groupInfo = (GroupInfo) itemAtPosition;
+                    intent.putExtra(StringConstants.GROUP_INFO, groupInfo);
+
+                    startActivity(intent);
+                }
+            }
+        });
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

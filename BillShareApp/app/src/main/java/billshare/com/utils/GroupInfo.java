@@ -1,6 +1,9 @@
 package billshare.com.utils;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -8,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,15 +28,17 @@ import billshare.com.model.User;
         "users",
         "groupId"
 })
-public class GroupInfo {
+public class GroupInfo implements Serializable {
+    public GroupInfo() {
 
+    }
 
     @JsonProperty("name")
     private String name;
     @JsonProperty("adminId")
     private Integer adminId;
     @JsonProperty("amount")
-    private Integer amount;
+    private Double amount;
     @JsonProperty("users")
     private List<User> users = new ArrayList<User>();
     @JsonProperty("groupId")
@@ -41,9 +47,7 @@ public class GroupInfo {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     *
-     * @return
-     * The name
+     * @return The name
      */
     @JsonProperty("name")
     public String getName() {
@@ -51,9 +55,7 @@ public class GroupInfo {
     }
 
     /**
-     *
-     * @param name
-     * The name
+     * @param name The name
      */
     @JsonProperty("name")
     public void setName(String name) {
@@ -61,9 +63,7 @@ public class GroupInfo {
     }
 
     /**
-     *
-     * @return
-     * The adminId
+     * @return The adminId
      */
     @JsonProperty("adminId")
     public Integer getAdminId() {
@@ -71,9 +71,7 @@ public class GroupInfo {
     }
 
     /**
-     *
-     * @param adminId
-     * The adminId
+     * @param adminId The adminId
      */
     @JsonProperty("adminId")
     public void setAdminId(Integer adminId) {
@@ -81,29 +79,23 @@ public class GroupInfo {
     }
 
     /**
-     *
-     * @return
-     * The amount
+     * @return The amount
      */
     @JsonProperty("amount")
-    public Integer getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
     /**
-     *
-     * @param amount
-     * The amount
+     * @param amount The amount
      */
     @JsonProperty("amount")
-    public void setAmount(Integer amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
     /**
-     *
-     * @return
-     * The users
+     * @return The users
      */
     @JsonProperty("users")
     public List<User> getUsers() {
@@ -111,9 +103,7 @@ public class GroupInfo {
     }
 
     /**
-     *
-     * @param users
-     * The users
+     * @param users The users
      */
     @JsonProperty("users")
     public void setUsers(List<User> users) {
@@ -121,9 +111,7 @@ public class GroupInfo {
     }
 
     /**
-     *
-     * @return
-     * The groupId
+     * @return The groupId
      */
     @JsonProperty("groupId")
     public Integer getGroupId() {
@@ -131,9 +119,7 @@ public class GroupInfo {
     }
 
     /**
-     *
-     * @param groupId
-     * The groupId
+     * @param groupId The groupId
      */
     @JsonProperty("groupId")
     public void setGroupId(Integer groupId) {
@@ -149,4 +135,40 @@ public class GroupInfo {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
+
+    /*@Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(adminId);
+        dest.writeDouble(amount);
+        dest.writeString(name);
+        dest.writeTypedList(users);
+        dest.writeInt(groupId);
+    }
+
+    // Creator
+    public static final Parcelable.Creator<GroupInfo> CREATOR
+            = new Parcelable.Creator<GroupInfo>() {
+        public GroupInfo createFromParcel(Parcel in) {
+            return new GroupInfo(in);
+        }
+
+        public GroupInfo[] newArray(int size) {
+            return new GroupInfo[size];
+        }
+    };
+
+    // "De-parcel object
+    public GroupInfo(Parcel in) {
+        name = in.readString();
+        amount = in.readInt();
+        adminId = in.readInt();
+        groupId = in.readInt();
+        in.readTypedList(users, User.CREATOR);
+        //  in.readList(users, GroupInfo.class.getClassLoader());
+    }*/
 }
