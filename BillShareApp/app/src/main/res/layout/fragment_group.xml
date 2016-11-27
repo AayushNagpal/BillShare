@@ -7,7 +7,7 @@
 
     <!-- TODO: Update blank fragment layout -->
     <ListView
-        android:id="@+id/list"
+        android:id="@+id/friend_list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         />

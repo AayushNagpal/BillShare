@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,7 @@ import billshare.com.model.User;
 import billshare.com.responses.ResponseStatus;
 import billshare.com.restservice.RestServiceObject;
 import billshare.com.utils.PreferenceUtil;
+import billshare.com.utils.Status;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -41,7 +43,7 @@ public class AddGroupActivity extends AppCompatActivity {
     private ListView friendsList;
     private List<User> selectedList = new ArrayList<User>();
     private List<Friend> friends = new ArrayList<Friend>();
-    private EditText groupNameEditText;
+    private EditText groupNameEditText, amountEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class AddGroupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group);
         friendsList = (ListView) findViewById(R.id.friend_list);
         groupNameEditText = (EditText) findViewById(R.id.group_name);
+        amountEditText = (EditText) findViewById(R.id.amountEditText);
         userAutoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.searchFriends);
         userAutoCompleteTextView.setThreshold(1);
 
@@ -142,14 +145,19 @@ public class AddGroupActivity extends AppCompatActivity {
             boolean cancel = false;
             View focusView = null;
             String groupName = groupNameEditText.getText().toString();
+            String amount = amountEditText.getText().toString();
             if (TextUtils.isEmpty(groupName)) {
                 groupNameEditText.setError(getString(R.string.error_field_required));
                 focusView = groupNameEditText;
                 cancel = true;
-            }
-            else if (selectedList.size() == 0) {
+            } else if (selectedList.size() == 0) {
                 userAutoCompleteTextView.setError("Please select at least one user.");
                 focusView = userAutoCompleteTextView;
+                cancel = true;
+            }
+            if (TextUtils.isEmpty(amount)) {
+                amountEditText.setError(getString(R.string.error_field_required));
+                focusView = amountEditText;
                 cancel = true;
             }
             if (cancel) {
@@ -159,23 +167,34 @@ public class AddGroupActivity extends AppCompatActivity {
             } else {
                 for (User user : selectedList) {
                     Friend friend = new Friend();
-                    friend.setId(user.getId());
-                    friend.setStatus("P");
+                    friend.setUserId(user.getId());
+                    //friend.setStatus(Status.PENDING);
                     friends.add(friend);
                 }
                 Group group = new Group();
                 group.setAdminId(Integer.parseInt(PreferenceUtil.instance(getApplicationContext()).getIdFromSPreferences()));
                 group.setFriendsIds(friends);
-                Call<ResponseStatus> call = RestServiceObject.getiRestServicesObject(getApplicationContext()).saveGroup(group);
-                call.enqueue(new Callback<ResponseStatus>() {
+                group.setAmount(BigDecimal.valueOf(Double.parseDouble(amount)));
+                group.setName(groupName);
+                Call<Group> call = RestServiceObject.getiRestServicesObject(getApplicationContext()).saveGroup(group);
+                call.enqueue(new Callback<Group>() {
                     @Override
-                    public void onResponse(Response<ResponseStatus> response, Retrofit retrofit) {
-
+                    public void onResponse(Response<Group> response, Retrofit retrofit) {
+                        Group body = response.body();
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+                        ResponseStatus responseStatus = body.getResponseStatus();
+                        if(responseStatus!=null){
+                            if(responseStatus.getCode()==200){
+                                Toast.makeText(getApplicationContext(),"Group saved successfully.",Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
 
                     @Override
                     public void onFailure(Throwable t) {
-
+                        Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_SHORT).show();
                     }
                 });
             }
