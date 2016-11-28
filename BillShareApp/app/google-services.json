@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "551855083056",
+    "firebase_url": "https://anushaproject-147915.firebaseio.com",
+    "project_id": "anushaproject-147915",
+    "storage_bucket": "anushaproject-147915.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:551855083056:android:8c8c5411ac345e26",
+        "android_client_info": {
+          "package_name": "billshare.com.billshareapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "551855083056-qkvdo53f2u952vh9q1t6qe01levjjfm9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAs0YjLc_IL5QPFxq46WfQ9fTho03Wwo-Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:551855083056:android:88959d2ceb622b97",
+        "android_client_info": {
+          "package_name": "billshare.com.activities"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "551855083056-qkvdo53f2u952vh9q1t6qe01levjjfm9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAs0YjLc_IL5QPFxq46WfQ9fTho03Wwo-Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
