@@ -19,7 +19,7 @@ public class FCMUtils {
 		return fcmUtils;
 	}
 
-	public void sendNotification(final String deviceKey, final String title, final String _message) {
+	public void sendNotification(String deviceKey, String title, String _message) {
 		Thread t = new Thread() {
 			public void run() {
 				try {
