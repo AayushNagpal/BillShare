@@ -125,7 +125,7 @@ We need to speed up the things to complete the project on time and make sure tha
 
 **Teams**
 | Manoj                             | Aayush and Eswar   | Chad                                       | Anusha                            | Jayasree                                   |
-| --------------_------------------ | ------------------ | ------------------------------------------ | --------------------------------- | ------------------------------------------ |
+| --------------------------------- | ------------------ | ------------------------------------------ | --------------------------------- | ------------------------------------------ |
 | Budget notification functionality | Push notifications | Quality assessment tools and testing tools | Bill splittig logic               | Uploading images of bills                  |
 
 **Achievements**
