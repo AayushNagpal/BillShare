@@ -29,11 +29,11 @@ public class GroupServiceImpl implements GroupService {
 		if (groupDao.saveGroup(groupDTO, group)) {
 			responseStatus.setCode(ResponseCode.SUCCESS);
 			responseStatus.setStatus(Status.SUCCESS);
-			groupDTO.setStatus(responseStatus);
+			groupDTO.setResponseStatus(responseStatus);
 			return groupDTO;
 		}
 		responseStatus.setCode(ResponseCode.FAILURE);
-		groupDTO.setStatus(responseStatus);
+		groupDTO.setResponseStatus(responseStatus);
 		return groupDTO;
 	}
 

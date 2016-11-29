@@ -11,8 +11,16 @@ public class GroupInfo {
 	private Integer adminId;
 	private BigDecimal amount;
 	private List<User> users;
-
+	private BigDecimal limitAmount;
 	private Integer groupId;
+
+	public BigDecimal getLimitAmount() {
+		return limitAmount;
+	}
+
+	public void setLimitAmount(BigDecimal limitAmount) {
+		this.limitAmount = limitAmount;
+	}
 
 	public Integer getGroupId() {
 		return groupId;
