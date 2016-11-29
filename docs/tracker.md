@@ -46,6 +46,8 @@ Our team came up with designing a basic UI ,creating a database schema and captu
 **Things learned** 
 How to use the resources in a proper way by understanding each person's expertise and assigning tasks accordingly.
 
+---
+
 ### Sprint 2
 * Scrum Master: Anusha Kondam
 * Goals:
@@ -69,6 +71,8 @@ Incomplete implementation of home screen design and faced a challenge in release
 **Things learned** 
 How to work closely with the team.
 
+---
+
 ### Sprint 3
 * Scrum Master: Aayush Nagpal
 * Goals:
@@ -91,6 +95,8 @@ Successfully completed home screen design and creating group functionalities.
 
 **Things learned** 
 Team is getting along with android development, learning Hibernate, and Server side programming.
+
+---
 
 ### Sprint 4
 * Scrum Master: Shiva Manoj Reddy Gangula
@@ -116,6 +122,8 @@ We need to implement the actual bill splitting functionality and push notificati
 
 **Things learned** 
 We need to speed up the things to complete the project on time and make sure that everything works fine.
+
+---
 
 ### Sprint 5
 * Scrum Master: Jayasree
