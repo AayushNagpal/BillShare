@@ -1,21 +1,34 @@
 package billshare.com.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.squareup.picasso.Picasso;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import java.io.File;
 
 import billshare.com.model.User;
 import billshare.com.responses.ResponseStatus;
@@ -23,6 +36,7 @@ import billshare.com.restservice.RestServiceObject;
 import billshare.com.services.MyInstanceIDListenerService;
 import billshare.com.testcases.NameNotFoundException;
 import billshare.com.utils.CurrencyAndLanguageUtils;
+import billshare.com.utils.ImageUtils;
 import billshare.com.utils.NetWork;
 import billshare.com.utils.TimeZoneUtils;
 import billshare.com.utils.ValidationUtil;
@@ -41,9 +55,14 @@ public class RegisterActivity extends AppCompatActivity {
     Spinner countries;
     NetWork inetrService;
     Spinner currencies;
-
+    Context mContext;
+    View parentView;
+    ImageView imageView;
+    TextView fileNameView;
+    String imagePath;
     Spinner languages;
     ArrayAdapter<String> countriesAdapter, currencyAdapter, languageAdapter;
+    Button uploadButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +71,16 @@ public class RegisterActivity extends AppCompatActivity {
         setTimeZones();
         setCurrencies();
         setLanguages();
+        mContext = getApplicationContext();
+        parentView = findViewById(R.id.registerView);
+        fileNameView = (TextView) findViewById(R.id.fileNameView);
+        uploadButton = (Button) findViewById(R.id.uploadButton);
+        uploadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showImagePopup(v);
+            }
+        });
         findViewById(R.id.registerButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,7 +158,8 @@ public class RegisterActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
 
-
+            Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+            user.setProfilePic(ImageUtils.instance().getBinarySting(bitmap));
             Spinner timeZoneSpinner = (Spinner) findViewById(R.id.time_zone);
             user.setTimeZone(timeZoneSpinner.getSelectedItem().toString());
             Spinner currencySpinner = (Spinner) findViewById(R.id.currency);
@@ -194,4 +224,53 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    public void showImagePopup(View view) {
+
+        // File System.
+        final Intent galleryIntent = new Intent();
+        galleryIntent.setType("image/*");
+        galleryIntent.setAction(Intent.ACTION_PICK);
+
+        // Chooser of file system options.
+        final Intent chooserIntent = Intent.createChooser(galleryIntent, getString(R.string.string_choose_image));
+        startActivityForResult(chooserIntent, 1010);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 1010) {
+            if (data == null) {
+                Snackbar.make(parentView, R.string.string_unable_to_pick_image, Snackbar.LENGTH_INDEFINITE).show();
+                return;
+            }
+            mContext = getApplicationContext();
+            Uri selectedImageUri = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = getContentResolver().query(selectedImageUri, filePathColumn, null, null, null);
+
+            if (cursor != null) {
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                imagePath = cursor.getString(columnIndex);
+                fileNameView.setText(new File(imagePath).getName());
+                mContext = getApplicationContext();
+              /*  Picasso.with(mContext).load(new File(imagePath)).resize(200, 200).centerCrop()
+                        .into(imageView);
+
+                Snackbar.make(parentView, R.string.string_reselect, Snackbar.LENGTH_LONG).show();
+                cursor.close();*/
+
+                //   textView.setVisibility(View.GONE);
+                // imageView.setVisibility(View.VISIBLE);
+            } else {
+                //  textView.setVisibility(View.VISIBLE);
+               /* imageView.setVisibility(View.GONE);
+                Snackbar.make(parentView, R.string.string_unable_to_load_image, Snackbar.LENGTH_LONG).show();*/
+            }
+        }
+    }
 }
