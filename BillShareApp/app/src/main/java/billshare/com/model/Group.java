@@ -22,7 +22,8 @@ import billshare.com.responses.ResponseStatus;
         "friends",
         "responseStatus",
         "amount",
-        "name"
+        "name",
+        "image"
 })
 public class Group {
     @JsonProperty("id")
@@ -36,11 +37,25 @@ public class Group {
     @JsonProperty("amount")
     private BigDecimal amount;
     @JsonProperty("amountLimit")
-    private BigDecimal limit;
+    private BigDecimal amountLimit;
+    @JsonProperty("image")
+    private String image;
+
+    @JsonProperty("image")
+    public String getImage() {
+        return image;
+    }
+
+    @JsonProperty("image")
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @JsonProperty("friends")
     public List<Friend> getFriends() {
         return friends;
     }
+
     @JsonProperty("friends")
     public void setFriends(List<Friend> friends) {
         this.friends = friends;
@@ -51,13 +66,14 @@ public class Group {
     private String name;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
     @JsonProperty("amountLimit")
-    public BigDecimal getLimit() {
-        return limit;
+    public BigDecimal getAmountLimit() {
+        return amountLimit;
     }
     @JsonProperty("amountLimit")
-    public void setLimit(BigDecimal limit) {
-        this.limit = limit;
+    public void setAmountLimit(BigDecimal amountLimit) {
+        this.amountLimit = amountLimit;
     }
 
     @JsonProperty("name")
@@ -109,7 +125,6 @@ public class Group {
     public void setAdminId(Integer adminId) {
         this.adminId = adminId;
     }
-
 
 
     @JsonAnyGetter

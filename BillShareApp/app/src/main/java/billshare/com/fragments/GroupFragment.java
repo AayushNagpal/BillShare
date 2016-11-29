@@ -23,6 +23,7 @@ import billshare.com.responses.ResponseStatus;
 import billshare.com.restservice.RestServiceObject;
 import billshare.com.utils.GroupInfo;
 import billshare.com.utils.GroupsList;
+import billshare.com.utils.ImageUtils;
 import billshare.com.utils.PreferenceUtil;
 import billshare.com.utils.StringConstants;
 import retrofit2.Call;
@@ -98,7 +99,8 @@ public class GroupFragment extends Fragment {
                 if (itemAtPosition instanceof GroupInfo) {
 
                     GroupInfo groupInfo = (GroupInfo) itemAtPosition;
-                    intent.putExtra(StringConstants.GROUP_INFO, groupInfo);
+                    ImageUtils.instance().setGroupInfo(groupInfo);
+                   // intent.putExtra(StringConstants.GROUP_INFO, groupInfo);
 
                     startActivity(intent);
                 }

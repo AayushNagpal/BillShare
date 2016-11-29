@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
@@ -42,6 +44,7 @@ import billshare.com.model.User;
 import billshare.com.responses.ResponseStatus;
 import billshare.com.restservice.RestServiceObject;
 import billshare.com.utils.GroupInfo;
+import billshare.com.utils.ImageUtils;
 import billshare.com.utils.PreferenceUtil;
 import billshare.com.utils.Status;
 import billshare.com.utils.StringConstants;
@@ -86,13 +89,20 @@ public class AddGroupActivity extends AppCompatActivity {
         //  mContext = getApplicationContext();
         isEdit = getIntent().getBooleanExtra(StringConstants.IS_EDIT, false);
         if (isEdit) {
-            GroupInfo groupInfo = (GroupInfo) getIntent().getSerializableExtra(StringConstants.GROUP_INFO);
+            GroupInfo groupInfo = ImageUtils.instance().getGroupInfo();
             groupNameEditText.setText(groupInfo.getName());
             amountEditText.setText(String.valueOf(groupInfo.getAmount().toString()));
-            if (groupInfo.getLimitAmount() != null)
+
+            if (groupInfo.getLimitAmount() != null){
                 limitEditText.setText(String.valueOf(groupInfo.getLimitAmount().toString()));
+                limitEditText.setEnabled(false);
+            }
+
             selectedList = groupInfo.getUsers();
-            imageView.setVisibility(View.GONE);
+            imageView.setImageBitmap(ImageUtils.instance().getBitmapFromByteArray(groupInfo.getImage()));
+           /* Picasso.with(mContext).load(new File()).resize(200, 200).centerCrop()
+                    .into(imageView);*/
+            // imageView.setVisibility(View.GONE);
             setUserAdapter();
 
         }
@@ -131,7 +141,7 @@ public class AddGroupActivity extends AppCompatActivity {
     }
 
     private void setUserAdapter() {
-        selectedFriendsAdapter = new SelectedFriendList(AddGroupActivity.this, selectedList, isEdit);
+        selectedFriendsAdapter = new SelectedFriendList(AddGroupActivity.this, selectedList, isEdit,false);
         selectedFriendsAdapter.notifyDataSetChanged();
         friendsList.setAdapter(selectedFriendsAdapter);
     }
@@ -204,6 +214,7 @@ public class AddGroupActivity extends AppCompatActivity {
             View focusView = null;
             String groupName = groupNameEditText.getText().toString();
             String amount = amountEditText.getText().toString();
+            String limitAmount = limitEditText.getText().toString();
             if (TextUtils.isEmpty(groupName)) {
                 groupNameEditText.setError(getString(R.string.error_field_required));
                 focusView = groupNameEditText;
@@ -216,6 +227,11 @@ public class AddGroupActivity extends AppCompatActivity {
             if (TextUtils.isEmpty(amount)) {
                 amountEditText.setError(getString(R.string.error_field_required));
                 focusView = amountEditText;
+                cancel = true;
+            }
+            if (TextUtils.isEmpty(limitAmount)) {
+                limitEditText.setError(getString(R.string.error_field_required));
+                focusView = limitEditText;
                 cancel = true;
             }
             if (cancel) {
@@ -234,28 +250,8 @@ public class AddGroupActivity extends AppCompatActivity {
                 group.setFriends(friends);
                 group.setAmount(BigDecimal.valueOf(Double.parseDouble(amount)));
                 group.setName(groupName);
-                // saveGroup(group);
-                Call<Group> call = RestServiceObject.getiRestServicesObject(getApplicationContext()).saveGroup(group);
-                call.enqueue(new Callback<Group>() {
-                    @Override
-                    public void onResponse(Call<Group> call, Response<Group> response) {
-                        Group body = response.body();
-                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                        startActivity(intent);
-                        finish();
-                        ResponseStatus responseStatus = body.getResponseStatus();
-                        if (responseStatus != null) {
-                            if (responseStatus.getCode() == 200) {
-                                Toast.makeText(getApplicationContext(), "Group saved successfully.", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Group> call, Throwable t) {
-
-                    }
-                });
+                group.setAmountLimit(BigDecimal.valueOf(Double.parseDouble(limitAmount)));
+                saveGroup(group);
 
             }
         }
@@ -267,17 +263,43 @@ public class AddGroupActivity extends AppCompatActivity {
         /**
          * Progressbar to Display if you need
          */
+
         final ProgressDialog progressDialog;
         progressDialog = new ProgressDialog(AddGroupActivity.this);
         progressDialog.setMessage(getString(R.string.string_title_upload_progressbar_));
         progressDialog.show();
+        //File file = new File(imagePath);
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+        group.setImage(ImageUtils.instance().getBinarySting(bitmap));
+        Call<Group> call = RestServiceObject.getiRestServicesObject(getApplicationContext()).saveGroup(group);
+        call.enqueue(new Callback<Group>() {
+            @Override
+            public void onResponse(Call<Group> call, Response<Group> response) {
+                progressDialog.dismiss();
+                Group body = response.body();
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
+                finish();
+                ResponseStatus responseStatus = body.getResponseStatus();
+                if (responseStatus != null) {
+                    if (responseStatus.getCode() == 200) {
+                        Toast.makeText(getApplicationContext(), "Group saved successfully.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Group> call, Throwable t) {
+                progressDialog.dismiss();
+            }
+        });
 
         //Create Upload Server Client
 
         //File creating from selected URL
-        File file = new File(imagePath);
 
-        // create RequestBody instance from file
+
+      /*  // create RequestBody instance from file
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
         // MultipartBody.Part is used to send also the actual file name
@@ -295,21 +317,21 @@ public class AddGroupActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(intent);
                     finish();
-/*                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+*//*                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(intent);
-                    finish();*/
-                    /*if (response.body().getResult().equals("success"))
+                    finish();*//*
+                    *//*if (response.body().getResult().equals("success"))
                         Snackbar.make(parentView, R.string.string_upload_success, Snackbar.LENGTH_LONG).show();
                     else
-                        Snackbar.make(parentView, R.string.string_upload_fail, Snackbar.LENGTH_LONG).show();*/
+                        Snackbar.make(parentView, R.string.string_upload_fail, Snackbar.LENGTH_LONG).show();*//*
 
                 } else {
                     Snackbar.make(parentView, R.string.string_upload_fail, Snackbar.LENGTH_LONG).show();
                 }
 
-                /**
-                 * Update Views
-                 */
+                *//**
+         * Update Views
+         *//*
                 // imagePath = "";
                 //textView.setVisibility(View.VISIBLE);
                 //  imageView.setVisibility(View.INVISIBLE);
@@ -321,7 +343,7 @@ public class AddGroupActivity extends AppCompatActivity {
             }
 
 
-        });
+        });*/
     }
 
     /**

@@ -17,6 +17,7 @@ import billshare.com.activities.AddGroupActivity;
 import billshare.com.activities.R;
 import billshare.com.model.User;
 import billshare.com.utils.GroupInfo;
+import billshare.com.utils.ImageUtils;
 import billshare.com.utils.PreferenceUtil;
 import billshare.com.utils.StringConstants;
 
@@ -74,7 +75,8 @@ public class GroupAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, AddGroupActivity.class);
-                intent.putExtra(StringConstants.GROUP_INFO, mList.get(position));
+                ImageUtils.instance().setGroupInfo(mList.get(position));
+               // intent.putExtra(StringConstants.GROUP_INFO, mList.get(position));
                 intent.putExtra(StringConstants.IS_EDIT, true);
                 mContext.startActivity(intent);
                 // Toast.makeText(mContext, "Clicked", Toast.LENGTH_SHORT).show();
