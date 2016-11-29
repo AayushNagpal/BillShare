@@ -12,9 +12,17 @@ public class GroupDTO {
 	private String name;
 	private BigDecimal amount;
 	private List<Friend> friends;
-
+	private String image;
 	private ResponseStatus responseStatus;
 	private BigDecimal amountLimit;
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
 
 	public BigDecimal getAmountLimit() {
 		return amountLimit;

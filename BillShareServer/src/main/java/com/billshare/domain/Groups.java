@@ -1,6 +1,7 @@
 package com.billshare.domain;
 
 import java.math.BigDecimal;
+import java.sql.Blob;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,10 +16,20 @@ public class Groups {
 	private Integer id;
 	private String name;
 	private Integer adminId;
-	//@Column(name="amount",precision = 8, scale = 2 )
+	// @Column(name="amount",precision = 8, scale = 2 )
 	private BigDecimal amount;
 	private BigDecimal amountLimit;
+	private Blob imageFile;
+
 	
+
+	public Blob getImageFile() {
+		return imageFile;
+	}
+
+	public void setImageFile(Blob imageFile) {
+		this.imageFile = imageFile;
+	}
 
 	public BigDecimal getAmountLimit() {
 		return amountLimit;

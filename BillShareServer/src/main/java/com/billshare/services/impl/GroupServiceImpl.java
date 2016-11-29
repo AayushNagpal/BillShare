@@ -12,6 +12,7 @@ import com.billshare.domain.Groups;
 import com.billshare.dto.GroupDTO;
 import com.billshare.services.GroupService;
 import com.billshare.utils.GroupsList;
+import com.billshare.utils.ImageUtils;
 import com.billshare.utils.ResponseStatus;
 
 @Service
@@ -25,6 +26,9 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public GroupDTO saveGroup(GroupDTO groupDTO) {
 		Groups group = dozerBeanMapper.map(groupDTO, Groups.class);
+
+		group.setImageFile(ImageUtils.instance().getBlobFromString(groupDTO.getImage()));
+
 		ResponseStatus responseStatus = new ResponseStatus();
 		if (groupDao.saveGroup(groupDTO, group)) {
 			responseStatus.setCode(ResponseCode.SUCCESS);

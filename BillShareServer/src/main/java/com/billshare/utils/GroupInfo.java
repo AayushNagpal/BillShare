@@ -4,15 +4,25 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.billshare.domain.User;
+import com.billshare.dto.UserDTO;
 
 public class GroupInfo {
 
 	private String name;
 	private Integer adminId;
 	private BigDecimal amount;
-	private List<User> users;
+	private List<UserDTO> users;
 	private BigDecimal limitAmount;
 	private Integer groupId;
+    private String image;
+    
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
 
 	public BigDecimal getLimitAmount() {
 		return limitAmount;
@@ -54,11 +64,11 @@ public class GroupInfo {
 		this.amount = amount;
 	}
 
-	public List<User> getUsers() {
+	public List<UserDTO> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<User> users) {
+	public void setUsers(List<UserDTO> users) {
 		this.users = users;
 	}
 
