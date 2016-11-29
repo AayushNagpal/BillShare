@@ -25,7 +25,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "currency",
         "timeZone",
         "langugeCode",
-        "deviceId"
+        "deviceId",
+        "profilePic"
 })
 public class User implements Serializable {
 
@@ -45,6 +46,28 @@ public class User implements Serializable {
     private String langugeCode;
     @JsonProperty("deviceId")
     private String deviceId;
+    @JsonProperty("profilePic")
+    private String profilePic;
+    @JsonProperty("profilePic1")
+    private String profilePic1;
+    @JsonProperty("profilePic1")
+    public String getProfilePic1() {
+        return profilePic1;
+    }
+    @JsonProperty("profilePic1")
+    public void setProfilePic1(String profilePic1) {
+        this.profilePic1 = profilePic1;
+    }
+
+    @JsonProperty("profilePic")
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    @JsonProperty("profilePic")
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
+    }
 
     private String password;
     private boolean isSelected;

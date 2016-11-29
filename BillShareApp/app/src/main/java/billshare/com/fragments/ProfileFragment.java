@@ -12,7 +12,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import billshare.com.activities.R;
+import billshare.com.utils.ImageUtils;
 import billshare.com.utils.PreferenceUtil;
+import billshare.com.utils.ProfilePicUtils;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -34,6 +37,7 @@ public class ProfileFragment extends Fragment {
     private String mParam2;
     private TextView nameTextView, emailTextView, mobileTextView, timezoneTextView, currencyView;
     private OnFragmentInteractionListener mListener;
+    private CircleImageView profileImageView;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -77,11 +81,14 @@ public class ProfileFragment extends Fragment {
         mobileTextView = (TextView) v.findViewById(R.id.mobileNumberView);
         timezoneTextView = (TextView) v.findViewById(R.id.timeZoneView);
         currencyView = (TextView) v.findViewById(R.id.currencyView);
+        profileImageView = (CircleImageView) v.findViewById(R.id.profile_image);
         nameTextView.setText(PreferenceUtil.instance(getActivity()).getNameFromSPreferences());
         emailTextView.setText(PreferenceUtil.instance(getActivity()).getEmailIdFromSPreferences());
         mobileTextView.setText(PreferenceUtil.instance(getActivity()).getMobileNoFromSPreferences());
         timezoneTextView.setText(PreferenceUtil.instance(getActivity()).getTimeZoneFromSPreferences());
         currencyView.setText(PreferenceUtil.instance(getActivity()).getCurrencyFromSPreferences());
+        if(ProfilePicUtils.instance().getProfilePicByteString()!=null)
+        profileImageView.setImageBitmap(ImageUtils.instance().getBitmapFromByteArray(ProfilePicUtils.instance().getProfilePicByteString()));
         // Inflate the layout for this fragment
         return v;
     }
