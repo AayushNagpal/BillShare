@@ -5,9 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -28,10 +25,9 @@ import billshare.com.utils.GroupInfo;
 import billshare.com.utils.GroupsList;
 import billshare.com.utils.PreferenceUtil;
 import billshare.com.utils.StringConstants;
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -131,7 +127,7 @@ public class GroupFragment extends Fragment {
         Call<GroupsList> groups = RestServiceObject.getiRestServicesObject(getActivity()).groups(PreferenceUtil.instance(getActivity()).getIdFromSPreferences());
         groups.enqueue(new Callback<GroupsList>() {
             @Override
-            public void onResponse(Response<GroupsList> response, Retrofit retrofit) {
+            public void onResponse(Call<GroupsList> call, Response<GroupsList> response) {
                 GroupsList body = response.body();
                 ResponseStatus responseStatus = body.getResponseStatus();
                 if (responseStatus != null && responseStatus.getCode() == 200) {
@@ -143,10 +139,11 @@ public class GroupFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<GroupsList> call, Throwable t) {
 
             }
         });
+
     }
 
     @Override
