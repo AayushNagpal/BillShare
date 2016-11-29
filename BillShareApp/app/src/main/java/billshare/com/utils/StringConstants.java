@@ -9,4 +9,6 @@ public class StringConstants {
     public static final String TIMEZONE = "timezone";
     public static final String MOBILE_NO = "mobile_no";
     public static final String GROUP_INFO = "group_info";
+    public static final String IS_EDIT = "is_edit";
+
 }

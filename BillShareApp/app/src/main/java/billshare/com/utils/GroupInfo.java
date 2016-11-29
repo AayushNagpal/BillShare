@@ -26,13 +26,15 @@ import billshare.com.model.User;
         "adminId",
         "amount",
         "users",
-        "groupId"
+        "groupId",
+        "limitAmount"
 })
 public class GroupInfo implements Serializable {
     public GroupInfo() {
 
     }
-
+    @JsonProperty("limitAmount")
+    private Double limitAmount=0.0;
     @JsonProperty("name")
     private String name;
     @JsonProperty("adminId")
@@ -45,6 +47,14 @@ public class GroupInfo implements Serializable {
     private Integer groupId;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    @JsonProperty("limitAmount")
+    public Double getLimitAmount() {
+        return limitAmount;
+    }
+    @JsonProperty("limitAmount")
+    public void setLimitAmount(Double limitAmount) {
+        this.limitAmount = limitAmount;
+    }
 
     /**
      * @return The name
