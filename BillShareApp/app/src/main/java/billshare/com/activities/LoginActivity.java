@@ -4,24 +4,20 @@ import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
-
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,8 +29,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.iid.FirebaseInstanceId;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,10 +39,10 @@ import billshare.com.responses.ResponseStatus;
 import billshare.com.restservice.RestServiceObject;
 import billshare.com.utils.PermissionUtils;
 import billshare.com.utils.PreferenceUtil;
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -273,7 +267,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             Call<ResponseStatus> call = RestServiceObject.getiRestServicesObject(getApplicationContext()).login(user);
             call.enqueue(new Callback<ResponseStatus>() {
                 @Override
-                public void onResponse(Response<ResponseStatus> response, Retrofit retrofit) {
+                public void onResponse(Call<ResponseStatus> call, Response<ResponseStatus> response) {
                     if (response != null) {
 
                         User user = response.body().getUser();
@@ -293,10 +287,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
 
                 @Override
-                public void onFailure(Throwable t) {
+                public void onFailure(Call<ResponseStatus> call, Throwable t) {
                     Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
                 }
             });
+
             //mAuthTask = new UserLoginTask(email, password);
             // mAuthTask.execute((Void) null);
         }

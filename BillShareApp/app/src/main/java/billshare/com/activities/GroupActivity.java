@@ -29,7 +29,7 @@ public class GroupActivity extends AppCompatActivity {
         setTitle(groupInfo.getName());
         oweAmountTextView.setText(AmountUtil.instance(getApplicationContext()).getDividedAmount(groupInfo.getUsers(), groupInfo.getAmount(), groupInfo.getAdminId(), true));
         getAmountTextView.setText(AmountUtil.instance(getApplicationContext()).getDividedAmount(groupInfo.getUsers(), groupInfo.getAmount(), groupInfo.getAdminId(), false));
-        SelectedFriendList selectedFriendList = new SelectedFriendList(getApplicationContext(), groupInfo.getUsers());
+        SelectedFriendList selectedFriendList = new SelectedFriendList(getApplicationContext(), groupInfo.getUsers(),false);
         friendList.setAdapter(selectedFriendList);
        // Toast.makeText(getApplicationContext(), groupInfo.getName(), Toast.LENGTH_SHORT).show();
 

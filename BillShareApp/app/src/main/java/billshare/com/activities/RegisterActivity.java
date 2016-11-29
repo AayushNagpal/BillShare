@@ -26,10 +26,10 @@ import billshare.com.utils.CurrencyAndLanguageUtils;
 import billshare.com.utils.NetWork;
 import billshare.com.utils.TimeZoneUtils;
 import billshare.com.utils.ValidationUtil;
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 import static org.hamcrest.CoreMatchers.is;
 //import static org.hamcrest.Matchers.hasProperty;
@@ -141,7 +141,7 @@ public class RegisterActivity extends AppCompatActivity {
             Call<ResponseStatus> call = RestServiceObject.getiRestServicesObject(getApplicationContext()).register(user);
             call.enqueue(new Callback<ResponseStatus>() {
                 @Override
-                public void onResponse(Response<ResponseStatus> response, Retrofit retrofit) {
+                public void onResponse(Call<ResponseStatus> call, Response<ResponseStatus> response) {
                     if (response != null) {
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
@@ -149,10 +149,11 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Throwable t) {
+                public void onFailure(Call<ResponseStatus> call, Throwable t) {
                     Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
                 }
             });
+
         }
     }
 
