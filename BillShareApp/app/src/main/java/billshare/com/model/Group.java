@@ -35,10 +35,31 @@ public class Group {
     private ResponseStatus responseStatus;
     @JsonProperty("amount")
     private BigDecimal amount;
+    @JsonProperty("amountLimit")
+    private BigDecimal limit;
+    @JsonProperty("friends")
+    public List<Friend> getFriends() {
+        return friends;
+    }
+    @JsonProperty("friends")
+    public void setFriends(List<Friend> friends) {
+        this.friends = friends;
+    }
+
     @JsonProperty("name")
+
     private String name;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    @JsonProperty("amountLimit")
+    public BigDecimal getLimit() {
+        return limit;
+    }
+    @JsonProperty("amountLimit")
+    public void setLimit(BigDecimal limit) {
+        this.limit = limit;
+    }
+
     @JsonProperty("name")
     public String getName() {
         return name;
@@ -89,15 +110,8 @@ public class Group {
         this.adminId = adminId;
     }
 
-    @JsonProperty("friends")
-    public List<Friend> getFriendsIds() {
-        return friends;
-    }
 
-    @JsonProperty("friends")
-    public void setFriendsIds(List<Friend> friends) {
-        this.friends = friends;
-    }
+
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
