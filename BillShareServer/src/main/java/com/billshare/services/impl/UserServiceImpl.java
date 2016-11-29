@@ -14,6 +14,7 @@ import com.billshare.dao.UserDao;
 import com.billshare.domain.User;
 import com.billshare.dto.UserDTO;
 import com.billshare.services.UserService;
+import com.billshare.utils.ImageUtils;
 import com.billshare.utils.ResponseStatus;
 
 @Service
@@ -27,9 +28,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public ResponseStatus register(UserDTO userDTO) {
 		User user = dozerBeanMapper.map(userDTO, User.class);
+		user.set_profilePic(ImageUtils.instance().getBlobFromString(userDTO.getProfilePic()));
+		// user.setProfilePic(null);
 		ResponseStatus responseStatus = new ResponseStatus();
 		if (userDao.register(user)) {
-			responseStatus.setUser(user);
+			UserDTO map = dozerBeanMapper.map(user, UserDTO.class);
+			map.setProfilePic(ImageUtils.instance().getByteStringFromBlob(user.get_profilePic()));
+			responseStatus.setUser(map);
 			responseStatus.setCode(ResponseCode.SUCCESS);
 			responseStatus.setStatus(Status.SUCCESS);
 			return responseStatus;
@@ -41,7 +46,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public ResponseStatus login(User user) {
 		ResponseStatus responseStatus = new ResponseStatus();
-		User login = userDao.login(user);
+		UserDTO login = userDao.login(user);
 		if (login != null) {
 			responseStatus.setUser(login);
 			responseStatus.setCode(ResponseCode.SUCCESS);
@@ -57,7 +62,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public ResponseStatus list(String id) {
 		ResponseStatus responseStatus = new ResponseStatus();
-		List<User> users = userDao.getUserList(id);
+		List<UserDTO> users = userDao.getUserList(id);
 		if (users != null) {
 			responseStatus.setUsers(users);
 			responseStatus.setCode(ResponseCode.SUCCESS);

@@ -1,5 +1,7 @@
 package com.billshare.domain;
 
+import java.sql.Blob;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,27 +14,27 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	@Column(name="mobile_no")
+	@Column(name = "mobile_no")
 	private String mobileNo;
-	@Column(name="email_id")
+	@Column(name = "email_id")
 	private String emailId;
 	private String currency;
-	@Column(name="time_zone")
+	@Column(name = "time_zone")
 	private String timeZone;
-	@Column(name="language_code")
+	@Column(name = "language_code")
 	private String langugeCode;
-	@Column(name="device_id")
+	@Column(name = "device_id")
 	private String deviceId;
 	private String password;
-	
 
-	public String getPassword() {
-		return password;
-	}
+	private Blob _profilePic;
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+	/*
+	 * public String getProfilePic1() { return profilePic1; }
+	 * 
+	 * public void setProfilePic1(String profilePic1) { this.profilePic1 =
+	 * profilePic1; }
+	 */
 
 	public Long getId() {
 		return id;
@@ -96,6 +98,22 @@ public class User {
 
 	public void setDeviceId(String deviceId) {
 		this.deviceId = deviceId;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Blob get_profilePic() {
+		return _profilePic;
+	}
+
+	public void set_profilePic(Blob _profilePic) {
+		this._profilePic = _profilePic;
 	}
 
 }
