@@ -14,6 +14,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="search">Search Friend</string>
     <string name="full_name">Name</string>
     <string name="phone_number">Mobile Number</string>
     <string name="time_zone">Select Time Zone</string>
@@ -31,4 +32,14 @@
     <string name="owe">YOU OWE</string>
     <string name="get">YOU GET</string>
     <string name="amount">Enter amount</string>
+    <string name="limit_amount">Enter limit amount</string>
+    <string name="string_title_upload_progressbar_">Uploading.. Wait for a while...</string>
+    <string name="string_upload_success">File Uploaded Successfully..</string>
+    <string name="string_upload_fail">Something went wrong</string>
+    <string name="string_internet_connection_warning">Internet Connection not Available</string>
+    <string name="string_message_to_attach_file">First attach file to upload</string>
+    <string name="string_choose_image">Select Image to Upload</string>
+    <string name="string_unable_to_pick_image">Unable to Pickup Image</string>
+    <string name="string_unable_to_load_image">Unable to Load Image</string>
+    <string name="string_reselect">Click on upload bill to Reselect</string>
 </resources>
