@@ -4,7 +4,7 @@ Billshare: An easy way to split expenses with friends.
 
 
 ## Billshare allows you to:
-1. Create groups of to share expenses
+1. Create groups to share expenses
 2. Receive notifications when a new expense arrives 
 
 ## Screenshots
