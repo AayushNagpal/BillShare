@@ -1,5 +1,6 @@
 package com.billshare.dao;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,7 +12,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.dozer.DozerBeanMapper;
 import org.hibernate.HibernateException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,15 +23,19 @@ import com.billshare.domain.Friend;
 import com.billshare.domain.Groups;
 import com.billshare.domain.User;
 import com.billshare.dto.GroupDTO;
+import com.billshare.dto.UserDTO;
 import com.billshare.utils.FCMUtils;
 import com.billshare.utils.GroupInfo;
+import com.billshare.utils.ImageUtils;
+import com.google.api.client.util.Base64;
 
 @Repository
 @Transactional
 public class GroupDao {
 	@PersistenceContext
 	private EntityManager entityManager;
-
+	@Autowired
+	DozerBeanMapper dozerBeanMapper;
 	public boolean saveGroup(GroupDTO dto, Groups group) {
 		try {
 			entityManager.persist(group);
@@ -66,6 +73,7 @@ public class GroupDao {
 			dto.setAdminId(group.getAdminId());
 			dto.setAmount(group.getAmount());
 			dto.setName(group.getName());
+			dto.setImage(ImageUtils.instance().getByteStringFromBlob(group.getImageFile()));
 			dto.setUsers(getFriendsByGroupId(group));
 			groupDTOs.add(dto);
 		}
@@ -104,6 +112,7 @@ public class GroupDao {
 			dto.setAdminId(singleResult.getAdminId());
 			dto.setAmount(singleResult.getAmount());
 			dto.setName(singleResult.getName());
+			dto.setImage(ImageUtils.instance().getByteStringFromBlob(singleResult.getImageFile()));
 			dto.setUsers(getFriendsByGroupId(singleResult));
 			groupDTOs.add(dto);
 
@@ -127,7 +136,7 @@ public class GroupDao {
 
 	}
 
-	private List<User> getFriendsByGroupId(Groups group) {
+	private List<UserDTO> getFriendsByGroupId(Groups group) {
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Friend> criteriaQuery = criteriaBuilder.createQuery(Friend.class);
 		Root<Friend> root = criteriaQuery.from(Friend.class);
@@ -135,21 +144,24 @@ public class GroupDao {
 		Predicate groupID = criteriaBuilder.equal(root.get("groupId"), group.getId());
 		criteriaQuery.select(root).where(groupID);
 		List<Friend> resultList = entityManager.createQuery(criteriaQuery).getResultList();
-		List<User> users = new ArrayList<User>();
+		List<UserDTO> users = new ArrayList<UserDTO>();
 		for (Friend friend : resultList) {
 			CriteriaBuilder criteriaBuilder1 = entityManager.getCriteriaBuilder();
 			CriteriaQuery<User> criteriaQuery1 = criteriaBuilder1.createQuery(User.class);
 			Root<User> root1 = criteriaQuery1.from(User.class);
 			Predicate userId = criteriaBuilder1.equal(root1.get("id"), friend.getUserId());
 			criteriaQuery1.select(root1).where(userId);
-			users.add(entityManager.createQuery(criteriaQuery1).getSingleResult());
+			User singleResult = entityManager.createQuery(criteriaQuery1).getSingleResult();
+			UserDTO map = dozerBeanMapper.map((User) singleResult, UserDTO.class);
+			users.add(map);
 		}
 		if (users.isEmpty()) {
 			return Collections.emptyList();
 		} else {
 			User groupAdminInfo = getUserInfo(group.getAdminId());
 			if (groupAdminInfo != null) {
-				users.add(groupAdminInfo);
+				UserDTO map = dozerBeanMapper.map((User) groupAdminInfo, UserDTO.class);
+				users.add(map);
 			}
 			return users;
 		}
