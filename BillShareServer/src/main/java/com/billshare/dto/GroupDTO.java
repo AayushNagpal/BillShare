@@ -12,13 +12,23 @@ public class GroupDTO {
 	private String name;
 	private BigDecimal amount;
 	private List<Friend> friends;
-	private ResponseStatus responseStatus;
 
-	public ResponseStatus getStatus() {
+	private ResponseStatus responseStatus;
+	private BigDecimal amountLimit;
+
+	public BigDecimal getAmountLimit() {
+		return amountLimit;
+	}
+
+	public void setAmountLimit(BigDecimal amountLimit) {
+		this.amountLimit = amountLimit;
+	}
+
+	public ResponseStatus getResponseStatus() {
 		return responseStatus;
 	}
 
-	public void setStatus(ResponseStatus responseStatus) {
+	public void setResponseStatus(ResponseStatus responseStatus) {
 		this.responseStatus = responseStatus;
 	}
 

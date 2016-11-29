@@ -15,8 +15,18 @@ public class Groups {
 	private Integer id;
 	private String name;
 	private Integer adminId;
-	@Column(name="amount",precision = 8, scale = 2 )
+	//@Column(name="amount",precision = 8, scale = 2 )
 	private BigDecimal amount;
+	private BigDecimal amountLimit;
+	
+
+	public BigDecimal getAmountLimit() {
+		return amountLimit;
+	}
+
+	public void setAmountLimit(BigDecimal amountLimit) {
+		this.amountLimit = amountLimit;
+	}
 
 	public BigDecimal getAmount() {
 		return amount;
