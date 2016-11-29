@@ -6,14 +6,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.concurrent.TimeUnit;
 
-import retrofit.JacksonConverterFactory;
-import retrofit.Retrofit;
+import retrofit2.Retrofit;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 
 public class RestServiceObject {
     private static Context context1;
 
-    private static final String BASE_URL = "http://45.55.218.193:3306";
+    private static final String BASE_URL = "http://192.168.0.10:8080";
 
     public static IRestServices getiRestServicesObject(Context context) {
         context1 = context;
@@ -23,7 +23,8 @@ public class RestServiceObject {
                 .baseUrl(BASE_URL)
                 .addConverterFactory(JacksonConverterFactory.create(objectMapper))
                 .build();
-        retrofit.client().setConnectTimeout(10, TimeUnit.SECONDS);
+
+       // retrofit.client().setConnectTimeout(10, TimeUnit.SECONDS);
         return retrofit.create(IRestServices.class);
     }
 

@@ -1,14 +1,23 @@
 package billshare.com.restservice;
 
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.ResponseBody;
+
 import billshare.com.model.Group;
 import billshare.com.model.User;
 import billshare.com.responses.ResponseStatus;
 import billshare.com.utils.GroupsList;
-import retrofit.Call;
-import retrofit.http.Body;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.Query;
+import okhttp3.MultipartBody;
+
+
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
+import retrofit2.http.Query;
 
 
 public interface IRestServices {
@@ -23,7 +32,13 @@ public interface IRestServices {
 
     @POST("/groups/save")
     Call<Group> saveGroup(@Body Group group);
+
     @GET("/groups/list")
     Call<GroupsList> groups(@Query("id") String id);
+
+    @Multipart
+    @POST("/groups/saveGroup")
+    Call<Group> saveGroup(
+            @Part MultipartBody.Part file);
 
 }
