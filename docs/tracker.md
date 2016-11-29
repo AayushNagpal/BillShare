@@ -30,7 +30,8 @@ The main aim of the team is to develop an Android application to split the bill,
 5.	Creating and testing a sample database schema.
 
 **Teams**
-| Chad, Jayasree  | Chad, Jayasree   | Chad, Jayasree       |
+| Chad, Jayasree  | Aayush, Anusha   | Manoj, Eshwar        |
+| --------------- | ---------------- | -------------------- |
 | Database Schema | Basic Android UI | UML and User Stories |
 
 **Achievements**
@@ -53,7 +54,8 @@ How to use the resources in a proper way by understanding each person's expertis
 4. Home screen design.
 
 **Teams**
-| Eshwar, Manoj       | Chad and Aayush                | Anusha, Jayasree                                                                |
+| Eshwar, Manoj       | Chad and Aayush                | Anusha, Jayasree                                             |      
+| ------------------- | ------------------------------ | ------------------------------------------------------------ |                                     |
 | REgistration Screen | Test cases, login registration | registration screen, server-side coding, Jenkins integration |
 
 **Achievements**
@@ -73,7 +75,8 @@ How to work closely with the team.
 3. Creating groups for splitbill.
 
 **Teams**
-| Eshwar, Manoj                               | Chad and Aayush                             | Anusha, Jayasree                                                                |
+| Eshwar, Manoj                               | Chad and Aayush                             | Anusha, Jayasree                                           |
+| ------------------------------------------- | ------------------------------------------- | ---------------------------------------------------------- |
 | Home Screen design and created group saving | Creating group functionality and unit tests | Server side programming for Group creation, Schema testing |
 
 **Achievements**
@@ -98,6 +101,7 @@ Team is getting along with android development, learning Hibernate, and Server s
 
 **Teams**
 | Manoj                                                                 | Aayush and Eswar            | Chad                                                                           | Anusha                                                            | Jayasree                                   |
+| --------------------------------------------------------------------- | --------------------------- | ------------------------------------------------------------------------------ | ----------------------------------------------------------------- | ------------------------------------------ |
 | Fixing the database issue, adding validation and logout functionality | Adding friends to the group | Debugging and worked on the build failure issues. Unit testing for server side | Displaying friends on apps timeline and Changes to group creation | Server side programming for adding friends |
 
 **Achievements**
@@ -121,7 +125,8 @@ We need to speed up the things to complete the project on time and make sure tha
 
 **Teams**
 | Manoj                             | Aayush and Eswar   | Chad                                       | Anusha                            | Jayasree                                   |
-| Budget notification functionality | Push notifications | Quality assessment tools and testing tools | Uploading images of bills |
+| --------------_------------------ | ------------------ | ------------------------------------------ | --------------------------------- | ------------------------------------------ |
+| Budget notification functionality | Push notifications | Quality assessment tools and testing tools | Bill splittig logic               | Uploading images of bills                  |
 
 **Achievements**
 Successfully implemented all the tasks of Sprint 5
