@@ -7,7 +7,7 @@
 2. Receive notifications when a new expense arrives 
 
 ## Screenshots
-![BillShare home screen](https://gitlab.com/anagpal/6363AndroidDevelopment/blob/master/docs/ScreenShots/Screenshot_1480459967.png)
+![BillShare home screen](https://gitlab.com/anagpal/6363AndroidDevelopment/raw/78679535ee43b6f49f899bf8e06264bc698bf6c5/docs/ScreenShots/Screenshot_1480459981.png)
 
 ## Technologies Used
 * Android
