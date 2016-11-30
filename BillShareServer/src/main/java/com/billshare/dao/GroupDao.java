@@ -1,5 +1,6 @@
 package com.billshare.dao;
 
+import java.math.BigDecimal;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,6 +37,7 @@ public class GroupDao {
 	private EntityManager entityManager;
 	@Autowired
 	DozerBeanMapper dozerBeanMapper;
+
 	public boolean saveGroup(GroupDTO dto, Groups group) {
 		try {
 			entityManager.persist(group);
@@ -170,6 +172,20 @@ public class GroupDao {
 
 	}
 
+	private void removeFriendsByGroupId(Groups group) {
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Friend> criteriaQuery = criteriaBuilder.createQuery(Friend.class);
+		Root<Friend> root = criteriaQuery.from(Friend.class);
+		// Predicate userId = criteriaBuilder.equal(root.get("id"), groupId);
+		Predicate groupID = criteriaBuilder.equal(root.get("groupId"), group.getId());
+		criteriaQuery.select(root).where(groupID);
+		List<Friend> resultList = entityManager.createQuery(criteriaQuery).getResultList();
+		for (Friend friend : resultList) {
+			entityManager.remove(friend);
+		}
+
+	}
+
 	private User getUserInfo(Integer id) {
 		CriteriaBuilder criteriaBuilder1 = entityManager.getCriteriaBuilder();
 		CriteriaQuery<User> criteriaQuery1 = criteriaBuilder1.createQuery(User.class);
@@ -177,6 +193,26 @@ public class GroupDao {
 		Predicate userId = criteriaBuilder1.equal(root1.get("id"), id);
 		criteriaQuery1.select(root1).where(userId);
 		return entityManager.createQuery(criteriaQuery1).getSingleResult();
+	}
+
+	public boolean update(GroupDTO groupDTO, Groups groups) {
+		// Groups find = entityManager.find(Groups.class, groups.getId());
+
+		entityManager.merge(groups);
+		removeFriendsByGroupId(groups);
+		saveFriend(groupDTO.getFriendsIds(), groups.getId(), groups.getName());
+		entityManager.flush();
+		if (groupDTO.getAmount().compareTo(groupDTO.getAmountLimit()) == 1) {
+			List<Friend> friends = groupDTO.getFriendsIds();
+			for (Friend friend : friends) {
+			
+				entityManager.persist(friend);
+				User userInfo = getUserInfo(friend.getUserId());
+				FCMUtils.instance().sendNotification(userInfo.getDeviceId(), "", groupDTO.getName()+ " limit amount is exceeded. "
+						+ String.valueOf(groupDTO.getAmount().subtract(groupDTO.getAmountLimit())));
+			}
+		}
+		return true;
 	}
 	/*
 	 * private List<User> getFriends(Integer groupId) { CriteriaBuilder

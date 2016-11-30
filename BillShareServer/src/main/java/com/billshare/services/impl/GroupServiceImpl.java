@@ -11,6 +11,7 @@ import com.billshare.dao.GroupDao;
 import com.billshare.domain.Groups;
 import com.billshare.dto.GroupDTO;
 import com.billshare.services.GroupService;
+import com.billshare.utils.FCMUtils;
 import com.billshare.utils.GroupsList;
 import com.billshare.utils.ImageUtils;
 import com.billshare.utils.ResponseStatus;
@@ -26,8 +27,8 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public GroupDTO saveGroup(GroupDTO groupDTO) {
 		Groups group = dozerBeanMapper.map(groupDTO, Groups.class);
-
-		group.setImageFile(ImageUtils.instance().getBlobFromString(groupDTO.getImage()));
+		if (groupDTO.getImage() != null)
+			group.setImageFile(ImageUtils.instance().getBlobFromString(groupDTO.getImage()));
 
 		ResponseStatus responseStatus = new ResponseStatus();
 		if (groupDao.saveGroup(groupDTO, group)) {
@@ -50,6 +51,25 @@ public class GroupServiceImpl implements GroupService {
 		responseStatus.setStatus(Status.SUCCESS);
 		groupsList.setResponseStatus(responseStatus);
 		return groupsList;
+	}
+
+	@Override
+	public GroupDTO update(GroupDTO groupDTO) {
+		Groups group = dozerBeanMapper.map(groupDTO, Groups.class);
+		if (groupDTO.getImage() != null)
+			group.setImageFile(ImageUtils.instance().getBlobFromString(groupDTO.getImage()));
+		ResponseStatus responseStatus = new ResponseStatus();
+		if (groupDao.update(groupDTO, group)) {
+			
+			responseStatus.setCode(ResponseCode.SUCCESS);
+			responseStatus.setStatus(Status.SUCCESS);
+			groupDTO.setResponseStatus(responseStatus);
+			return groupDTO;
+		}
+		responseStatus.setCode(ResponseCode.FAILURE);
+		groupDTO.setResponseStatus(responseStatus);
+		return groupDTO;
+
 	}
 
 }

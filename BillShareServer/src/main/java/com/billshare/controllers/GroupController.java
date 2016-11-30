@@ -36,4 +36,9 @@ public class GroupController {
 
 		return groupService.getList(id);
 	}
+	@RequestMapping("/update")
+	public GroupDTO update(@RequestBody GroupDTO dto) {
+
+		return groupService.update(dto);
+	}
 }
