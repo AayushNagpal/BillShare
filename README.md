@@ -1,6 +1,6 @@
 # Team project for the CSCI 6363 (Agile Software Engineering) course in Fall 2016.
 
-![BillShare logo](https://gitlab.com/anagpal/6363AndroidDevelopment/raw/577827216d89c78a8cd018aeb5f5367665b30157/docs/logo.PNG)
+![BillShare logo](https://gitlab.com/anagpal/6363AndroidDevelopment/raw/master/docs/logo.PNG)
 
 ## BillShare allows you to:
 1. Create groups to share expenses
