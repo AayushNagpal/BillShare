@@ -22,11 +22,13 @@ public class SelectedFriendList extends BaseAdapter {
     private List<User> mList;
     private LayoutInflater mLayoutInflater = null;
     private boolean isEdit;
+    private boolean isView;
 
-    public SelectedFriendList(Context context, List<User> list, boolean isEdit) {
+    public SelectedFriendList(Context context, List<User> list, boolean isEdit, boolean isView) {
         mContext = context;
         mList = list;
         this.isEdit = isEdit;
+        this.isView = isView;
         mLayoutInflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -61,19 +63,25 @@ public class SelectedFriendList extends BaseAdapter {
         }
         viewHolder.name.setText(mList.get(position).getName());
         viewHolder.email.setText(mList.get(position).getEmailId());
+        if(isView==true){
+            viewHolder.imageView.setVisibility(View.INVISIBLE);
+        }
         viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isEdit==true) {
+                if (isEdit == true) {
 
                     if (mList.get(mList.size() - 1).getId().equals(Integer.valueOf(PreferenceUtil.instance(mContext).getIdFromSPreferences()))) {
                         mList.remove(position);
                     } else {
                         Toast.makeText(mContext, "You don't have rights to remove user.", Toast.LENGTH_SHORT).show();
                     }
-                }else{
+                } else {
                     mList.remove(position);
+
                 }
+                SelectedFriendList.this.notifyDataSetChanged();
+                SelectedFriendList.this.notifyDataSetInvalidated();
             }
         });
         return v;

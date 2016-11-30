@@ -47,12 +47,12 @@ public class PermissionUtils {
         List<String> permissionsNeeded = new ArrayList<String>();
 
         final List<String> permissionsList = new ArrayList<String>();
-        if (!addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION))
-            permissionsNeeded.add("GPS");
+       /* if (!addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION))
+            permissionsNeeded.add("GPS");*/
         if (!addPermission(permissionsList, Manifest.permission.READ_CONTACTS))
             permissionsNeeded.add("Read Contacts");
-        if (!addPermission(permissionsList, Manifest.permission.WRITE_CONTACTS))
-            permissionsNeeded.add("Write Contacts");
+       /* if (!addPermission(permissionsList, Manifest.permission.WRITE_CONTACTS))
+            permissionsNeeded.add("Write Contacts");*/
         if (!addPermission(permissionsList, Manifest.permission.CAMERA))
             permissionsNeeded.add("CAMERA");
         if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE))

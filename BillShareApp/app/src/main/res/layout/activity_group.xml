@@ -11,76 +11,93 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="billshare.com.activities.AddGroupActivity">
 
-    <android.support.design.widget.TextInputLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/group_name"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/group_name"
-            android:inputType="text"
-            android:maxLines="1" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/group_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/group_name"
+                    android:inputType="text"
+                    android:maxLines="1" />
 
-        <EditText
-            android:id="@+id/amountEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/amount"
+            </android.support.design.widget.TextInputLayout>
 
-            android:inputType="numberDecimal"
-            android:maxLines="1" />
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/amountEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/amount"
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+                    android:inputType="numberDecimal"
+                    android:maxLines="1" />
 
-        <EditText
-            android:id="@+id/limit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/limit_amount"
+            </android.support.design.widget.TextInputLayout>
 
-            android:inputType="numberDecimal"
-            android:maxLines="1" />
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/limit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/limit_amount"
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+                    android:inputType="numberDecimal"
+                    android:maxLines="1" />
 
-        <AutoCompleteTextView
-            android:id="@+id/searchFriends"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusableInTouchMode="true"
-            android:hint="@string/search" />
-    </android.support.design.widget.TextInputLayout>
+            </android.support.design.widget.TextInputLayout>
 
-    <ListView
-        android:id="@+id/friend_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/uploadBill"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upload Bill" />
+                <AutoCompleteTextView
+                    android:id="@+id/searchFriends"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="true"
+                    android:hint="@string/search" />
+            </android.support.design.widget.TextInputLayout>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <ListView
+                    android:id="@+id/friend_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/uploadBill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload Bill" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+
+                android:cropToPadding="true" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
