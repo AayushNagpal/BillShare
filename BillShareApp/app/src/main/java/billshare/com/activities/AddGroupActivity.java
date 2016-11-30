@@ -72,6 +72,9 @@ public class AddGroupActivity extends AppCompatActivity {
     String imagePath;
     private Button uploadBill;
     boolean isEdit;
+    String groupName, amount, limitAmount;
+    GroupInfo groupInfo;
+    private boolean isAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,16 +92,22 @@ public class AddGroupActivity extends AppCompatActivity {
         //  mContext = getApplicationContext();
         isEdit = getIntent().getBooleanExtra(StringConstants.IS_EDIT, false);
         if (isEdit) {
-            GroupInfo groupInfo = ImageUtils.instance().getGroupInfo();
+            groupInfo = ImageUtils.instance().getGroupInfo();
             groupNameEditText.setText(groupInfo.getName());
             amountEditText.setText(String.valueOf(groupInfo.getAmount().toString()));
 
-            if (groupInfo.getLimitAmount() != null){
+            if (groupInfo.getLimitAmount() != null) {
                 limitEditText.setText(String.valueOf(groupInfo.getLimitAmount().toString()));
                 limitEditText.setEnabled(false);
             }
 
             selectedList = groupInfo.getUsers();
+            if (selectedList.get(selectedList.size() - 1).getId().equals(Integer.valueOf(PreferenceUtil.instance(mContext).getIdFromSPreferences()))) {
+                isAdmin = true;
+            } else {
+                isAdmin = false;
+            }
+            selectedList.remove(selectedList.size() - 1);
             imageView.setImageBitmap(ImageUtils.instance().getBitmapFromByteArray(groupInfo.getImage()));
            /* Picasso.with(mContext).load(new File()).resize(200, 200).centerCrop()
                     .into(imageView);*/
@@ -141,7 +150,7 @@ public class AddGroupActivity extends AppCompatActivity {
     }
 
     private void setUserAdapter() {
-        selectedFriendsAdapter = new SelectedFriendList(AddGroupActivity.this, selectedList, isEdit,false);
+        selectedFriendsAdapter = new SelectedFriendList(AddGroupActivity.this, selectedList, isEdit, false, isAdmin);
         selectedFriendsAdapter.notifyDataSetChanged();
         friendsList.setAdapter(selectedFriendsAdapter);
     }
@@ -212,9 +221,9 @@ public class AddGroupActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.save) {
             boolean cancel = false;
             View focusView = null;
-            String groupName = groupNameEditText.getText().toString();
-            String amount = amountEditText.getText().toString();
-            String limitAmount = limitEditText.getText().toString();
+            groupName = groupNameEditText.getText().toString();
+            amount = amountEditText.getText().toString();
+            limitAmount = limitEditText.getText().toString();
             if (TextUtils.isEmpty(groupName)) {
                 groupNameEditText.setError(getString(R.string.error_field_required));
                 focusView = groupNameEditText;
@@ -245,21 +254,67 @@ public class AddGroupActivity extends AppCompatActivity {
                     //friend.setStatus(Status.PENDING);
                     friends.add(friend);
                 }
-                Group group = new Group();
-                group.setAdminId(Integer.parseInt(PreferenceUtil.instance(getApplicationContext()).getIdFromSPreferences()));
-                group.setFriends(friends);
-                group.setAmount(BigDecimal.valueOf(Double.parseDouble(amount)));
-                group.setName(groupName);
-                group.setAmountLimit(BigDecimal.valueOf(Double.parseDouble(limitAmount)));
-                saveGroup(group);
-
+                if (!isEdit)
+                    saveGroup();
+                else {
+                    updateGroup();
+                }
             }
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void saveGroup(Group group) {
+    private void updateGroup() {
+        final ProgressDialog progressDialog;
+        progressDialog = new ProgressDialog(AddGroupActivity.this);
+        progressDialog.setMessage("Updating.. Wait for a while...");
+        progressDialog.show();
+        Group group = new Group();
+        group.setId(groupInfo.getGroupId());
+        group.setAdminId(groupInfo.getAdminId());
+        group.setName(groupInfo.getName());
+        if (imagePath != null) {
+            Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+            group.setImage(ImageUtils.instance().getBinarySting(bitmap));
 
+        } else {
+            group.setImage(groupInfo.getImage());
+        }
+        group.setFriends(friends);
+        group.setAmountLimit(BigDecimal.valueOf(groupInfo.getLimitAmount()));
+        group.setAmount(BigDecimal.valueOf(Double.parseDouble(amount)));
+        Call<Group> call = RestServiceObject.getiRestServicesObject(getApplicationContext()).update(group);
+        call.enqueue(new Callback<Group>() {
+            @Override
+            public void onResponse(Call<Group> call, Response<Group> response) {
+                progressDialog.dismiss();
+                Group body = response.body();
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
+                finish();
+                ResponseStatus responseStatus = body.getResponseStatus();
+                if (responseStatus != null) {
+                    if (responseStatus.getCode() == 200) {
+                        Toast.makeText(getApplicationContext(), "Group updated successfully.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Group> call, Throwable t) {
+                progressDialog.dismiss();
+            }
+        });
+
+    }
+
+    private void saveGroup() {
+        Group group = new Group();
+        group.setAdminId(Integer.parseInt(PreferenceUtil.instance(getApplicationContext()).getIdFromSPreferences()));
+        group.setFriends(friends);
+        group.setAmount(BigDecimal.valueOf(Double.parseDouble(amount)));
+        group.setName(groupName);
+        group.setAmountLimit(BigDecimal.valueOf(Double.parseDouble(limitAmount)));
         /**
          * Progressbar to Display if you need
          */
