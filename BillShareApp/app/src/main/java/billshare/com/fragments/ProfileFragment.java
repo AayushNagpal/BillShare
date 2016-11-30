@@ -87,8 +87,8 @@ public class ProfileFragment extends Fragment {
         mobileTextView.setText(PreferenceUtil.instance(getActivity()).getMobileNoFromSPreferences());
         timezoneTextView.setText(PreferenceUtil.instance(getActivity()).getTimeZoneFromSPreferences());
         currencyView.setText(PreferenceUtil.instance(getActivity()).getCurrencyFromSPreferences());
-        if(ProfilePicUtils.instance().getProfilePicByteString()!=null)
-        profileImageView.setImageBitmap(ImageUtils.instance().getBitmapFromByteArray(ProfilePicUtils.instance().getProfilePicByteString()));
+        if (ProfilePicUtils.instance().getProfilePicByteString() != null)
+            profileImageView.setImageBitmap(ImageUtils.instance().getBitmapFromByteArray(ProfilePicUtils.instance().getProfilePicByteString()));
         // Inflate the layout for this fragment
         return v;
     }
@@ -109,6 +109,14 @@ public class ProfileFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }*/
+
+    }
+
+    @Override
+    public void onResume() {
+        if (ProfilePicUtils.instance().getProfilePicByteString() != null)
+            profileImageView.setImageBitmap(ImageUtils.instance().getBitmapFromByteArray(ProfilePicUtils.instance().getProfilePicByteString()));
+        super.onResume();
     }
 
     @Override

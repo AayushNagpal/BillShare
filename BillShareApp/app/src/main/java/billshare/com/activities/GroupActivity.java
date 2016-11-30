@@ -34,7 +34,7 @@ public class GroupActivity extends AppCompatActivity {
         setTitle(groupInfo.getName());
         oweAmountTextView.setText(AmountUtil.instance(getApplicationContext()).getDividedAmount(groupInfo.getUsers(), groupInfo.getAmount(), groupInfo.getAdminId(), true));
         getAmountTextView.setText(AmountUtil.instance(getApplicationContext()).getDividedAmount(groupInfo.getUsers(), groupInfo.getAmount(), groupInfo.getAdminId(), false));
-        SelectedFriendList selectedFriendList = new SelectedFriendList(getApplicationContext(), groupInfo.getUsers(), false,true);
+        SelectedFriendList selectedFriendList = new SelectedFriendList(getApplicationContext(), groupInfo.getUsers(), false,true,false);
         friendList.setAdapter(selectedFriendList);
         if (groupInfo.getImage() != null)
             imageView.setImageBitmap(ImageUtils.instance().getBitmapFromByteArray(groupInfo.getImage()));

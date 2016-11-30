@@ -23,12 +23,14 @@ public class SelectedFriendList extends BaseAdapter {
     private LayoutInflater mLayoutInflater = null;
     private boolean isEdit;
     private boolean isView;
+    private boolean isAdmin;
 
-    public SelectedFriendList(Context context, List<User> list, boolean isEdit, boolean isView) {
+    public SelectedFriendList(Context context, List<User> list, boolean isEdit, boolean isView,boolean isAdmin) {
         mContext = context;
         mList = list;
         this.isEdit = isEdit;
         this.isView = isView;
+        this.isAdmin=isAdmin;
         mLayoutInflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -71,7 +73,7 @@ public class SelectedFriendList extends BaseAdapter {
             public void onClick(View v) {
                 if (isEdit == true) {
 
-                    if (mList.get(mList.size() - 1).getId().equals(Integer.valueOf(PreferenceUtil.instance(mContext).getIdFromSPreferences()))) {
+                    if (isAdmin) {
                         mList.remove(position);
                     } else {
                         Toast.makeText(mContext, "You don't have rights to remove user.", Toast.LENGTH_SHORT).show();
