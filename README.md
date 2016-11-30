@@ -1,13 +1,13 @@
 # Team project for the CSCI 6363 (Agile Software Engineering) course in Fall 2016.
 
-![SplitBill logo](https://gitlab.com/anagpal/6363AndroidDevelopment/raw/577827216d89c78a8cd018aeb5f5367665b30157/docs/logo.PNG)
+![BillShare logo](https://gitlab.com/anagpal/6363AndroidDevelopment/raw/577827216d89c78a8cd018aeb5f5367665b30157/docs/logo.PNG)
 
-## SplitBill allows you to:
+## BillShare allows you to:
 1. Create groups to share expenses
 2. Receive notifications when a new expense arrives 
 
 ## Screenshots
-In progress
+![BillShare home screen](https://gitlab.com/anagpal/6363AndroidDevelopment/blob/master/docs/ScreenShots/Screenshot_1480459967.png)
 
 ## Technologies Used
 * Android
