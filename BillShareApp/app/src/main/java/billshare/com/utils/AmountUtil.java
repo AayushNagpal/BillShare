@@ -32,7 +32,7 @@ public class AmountUtil {
                 return String.valueOf(getAmount(users.size(), amount, false, isDebit));
             }
         }
-        return "--";
+        return "0.0";
     }
 
     private Double getAmount(int noOfUsers, Double amount, boolean isAdmin, boolean isDebit) {
@@ -40,7 +40,7 @@ public class AmountUtil {
 
         if (!isDebit && isAdmin) {
             calculatedAmount = amount - (amount / noOfUsers);
-        } else if (isDebit == true) {
+        } else if (!isAdmin&&isDebit == true) {
             calculatedAmount = amount / noOfUsers;
         }
         return Math.round(calculatedAmount * 100.00) / 100.00;
