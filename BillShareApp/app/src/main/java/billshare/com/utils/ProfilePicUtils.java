@@ -2,17 +2,15 @@ package billshare.com.utils;
 
 
 public class ProfilePicUtils {
-    private static ProfilePicUtils profilePicUtils;
-    private String profilePicByteString;
+    private final static ProfilePicUtils profilePicUtils= new ProfilePicUtils();
+    private static String profilePicByteString;
 
     private ProfilePicUtils() {
 
     }
 
     public static ProfilePicUtils instance() {
-        if (profilePicUtils == null) {
-            profilePicUtils = new ProfilePicUtils();
-        }
+
         return profilePicUtils;
     }
 

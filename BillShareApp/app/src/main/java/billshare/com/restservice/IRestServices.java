@@ -35,7 +35,8 @@ public interface IRestServices {
 
     @GET("/groups/list")
     Call<GroupsList> groups(@Query("id") String id);
-
+    @POST("/groups/update")
+    Call<Group> update(@Body Group group);
     @Multipart
     @POST("/groups/saveGroup")
     Call<Group> saveGroup(

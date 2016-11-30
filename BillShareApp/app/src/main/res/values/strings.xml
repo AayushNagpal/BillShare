@@ -33,7 +33,7 @@
     <string name="get">YOU GET</string>
     <string name="amount">Enter amount</string>
     <string name="limit_amount">Enter limit amount</string>
-    <string name="string_title_upload_progressbar_">Uploading.. Wait for a while...</string>
+    <string name="string_title_upload_progressbar_">Saving.. Wait for a while...</string>
     <string name="string_upload_success">File Uploaded Successfully..</string>
     <string name="string_upload_fail">Something went wrong</string>
     <string name="string_internet_connection_warning">Internet Connection not Available</string>
