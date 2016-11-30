@@ -72,6 +72,7 @@ public class GroupDao {
 			dto.setGroupId(group.getId());
 			dto.setAdminId(group.getAdminId());
 			dto.setAmount(group.getAmount());
+			dto.setLimitAmount(group.getAmountLimit());
 			dto.setName(group.getName());
 			dto.setImage(ImageUtils.instance().getByteStringFromBlob(group.getImageFile()));
 			dto.setUsers(getFriendsByGroupId(group));
@@ -111,6 +112,7 @@ public class GroupDao {
 			dto.setGroupId(singleResult.getId());
 			dto.setAdminId(singleResult.getAdminId());
 			dto.setAmount(singleResult.getAmount());
+			dto.setLimitAmount(singleResult.getAmountLimit());
 			dto.setName(singleResult.getName());
 			dto.setImage(ImageUtils.instance().getByteStringFromBlob(singleResult.getImageFile()));
 			dto.setUsers(getFriendsByGroupId(singleResult));
