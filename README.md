@@ -23,9 +23,8 @@
 * Gradle
 
 ## Team Alpha is:
-* Jayasree Boya
-* Shiva Manoj Reddy Gangula
-* Eswar Karthik
-* Aayush Nagpal
+* Aayush Nagpal 
 * Anusha Reddy
+* Eswar Karthik
 * Chad M. West
+
